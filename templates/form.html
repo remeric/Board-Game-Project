@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Board Game Selector</title>
+</head>
+<body>
+<h1>Inputs for Board Game Selection
+</h1>
+
+<!-- stuff-->
+
+<form method="POST" action="{{ url_for('form') }}" >
+    {{ form.csrf_token }}
+<p>
+    {{form.players.label}} <br>
+    {{form.players(size=30)}}
+</p>
+<p>
+    {{form.playtime.label}} <br>
+    {{form.playtime(size=30)}}
+</p>
+
+<input type="submit" value="Submit">
+
+</form>
+
+</body>
+</html>
