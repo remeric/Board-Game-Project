@@ -20,7 +20,7 @@ def form():
     
     class BGForm(FlaskForm):
         players = IntegerField('Number of Players')
-        playtime = IntegerField('Time available to play')
+        playtime = IntegerField('Time available to play in minutes')
         Submit = SubmitField('Submit')
 
     class BoardGame:
