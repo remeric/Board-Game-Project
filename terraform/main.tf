@@ -41,7 +41,7 @@ resource "aws_security_group" "BGapp_sg" {
     to_port     = 22
     protocol    = "tcp"
     //need to add variable for cidr_blocks
-    cidr_blocks = ["x.x.x.x/32"]
+    cidr_blocks = ["97.116.10.226/32"]
   }
 
   egress {
@@ -77,8 +77,8 @@ resource "aws_instance" "BGapp_server" {
       "sudo amazon-linux-extras install -y docker",
       "sudo usermod -a -G docker ec2-user",
       "sudo service docker start",
-      "sudo docker pull remeric/board-game-selector:1.1",
-      "sudo docker run -d -t -i -p 80:80 remeric/board-game-selector:1.1"
+      "sudo docker pull remeric/board-game-selector:1.2",
+      "sudo docker run -d -t -i -p 80:80 remeric/board-game-selector:1.2"
     ]
   }
 }
