@@ -77,8 +77,8 @@ resource "aws_instance" "BGapp_server" {
       "sudo amazon-linux-extras install -y docker",
       "sudo usermod -a -G docker ec2-user",
       "sudo service docker start",
-      "sudo docker pull remeric/board-game-selector:1.0",
-      "sudo docker run -d -t -i -p 80:80 remeric/board-game-selector:1.0"
+      "sudo docker pull remeric/board-game-selector:1.1",
+      "sudo docker run -d -t -i -p 80:80 remeric/board-game-selector:1.1"
     ]
   }
 }
