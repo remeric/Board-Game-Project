@@ -52,7 +52,7 @@ def form():
     form = BGForm()
 
     if form.validate_on_submit():
-        availablegames = ["Games available to play - if the following lines are blank there are no games avaiable within your contraints:"]
+        availablegames = ["Games available to play - if the following lines are blank there are no games avaiable within your constraints:"]
         for obj in list:
             allthattime = obj.total_time()
             if form.players.data >= obj.playersmin:
@@ -64,7 +64,7 @@ def form():
     return render_template('form.html', form=form)
 
 if __name__== '__main__':
-    app.run(host="0.0.0.0",port=5000,debug=True)
+    app.run(host="localhost",port=80,debug=True)
  
     
 
