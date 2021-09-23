@@ -37,11 +37,11 @@ resource "aws_security_group" "BGapp_sg" {
   }
 
   ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
+    from_port = 22
+    to_port   = 22
+    protocol  = "tcp"
     //need to add variable for cidr_blocks
-    cidr_blocks = ["97.116.10.226/32"]
+    cidr_blocks = ["${chomp(data.http.myip.body)}/32"]
   }
 
   egress {

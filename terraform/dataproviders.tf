@@ -15,3 +15,8 @@ data "aws_ami" "aws-linux-2-latest" {
 data "aws_ami_ids" "aws-linux-2-latest_ids" {
   owners = ["amazon"]
 }
+
+
+data "http" "myip" {
+  url = "http://icanhazip.com/"
+}
