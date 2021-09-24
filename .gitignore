@@ -1,0 +1,5 @@
+#Files and folders to ignore
+./terraform/.terraform.lock.hcl
+./terraform/terraform.tfstate
+./terraform/terraform.tfstate.backup
+./terraform/.terraform/
