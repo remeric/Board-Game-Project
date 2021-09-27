@@ -1,8 +1,6 @@
-#https://docs.aws.amazon.com/AmazonECS/latest/developerguide/docker-basics.html
-#information added from above URL to dockerfile and main.tf to install docker and build and launch container
-
-//create bucket
-//Secret Keys
+#https://aws.amazon.com/premiumsupport/knowledge-center/eks-api-server-unauthorized-error/
+# For some reason you have to run the aws eks update-kubeconfig in order to connect and run the yaml config - need to figure out how to autommate this
+#aws eks update-kubeconfig --name BGcluster --region us-east-1
 
 terraform {
   required_providers {
@@ -10,75 +8,176 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 3.0"
     }
+    kubectl = {
+      source  = "gavinbunney/kubectl"
+      version = ">= 1.7.0"
+    }
   }
 }
-
 
 provider "aws" {
   region = "us-east-1"
 }
 
-resource "aws_iam_user" "BGapp_user" {
-  name = "BGapp_user"
+#x509 certificate error need to troubleshoot to make secure
+provider "kubernetes" {
+  host                   = data.aws_eks_cluster.BGcluster.endpoint
+  token                  = data.aws_eks_cluster_auth.BGcluster.token
+  cluster_ca_certificate = base64decode(data.aws_eks_cluster.BGcluster.certificate_authority.0.data)
+  config_path = "~/.kube/config"
 }
 
-resource "aws_default_vpc" "default" {
+resource "aws_iam_role" "eksClusterRole_bg" {
+  name = "eksClusterRole_bg"
+
+   assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Principal": {
+        "Service": "eks.amazonaws.com"
+      },
+      "Effect": "Allow",
+      "Sid": ""
+    }
+  ]
+}
+EOF
 }
 
-resource "aws_security_group" "BGapp_sg" {
-  name   = "BGapp_sg"
-  vpc_id = aws_default_vpc.default.id
+resource "aws_iam_role" "eksNodeRole_bg" {
+  name = "eksNodeRole_bg"
 
-  ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port = 22
-    to_port   = 22
-    protocol  = "tcp"
-    //need to add variable for cidr_blocks
-    cidr_blocks = ["${chomp(data.http.myip.body)}/32"]
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = -1
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  tags = {
-    name = "BGapp_sg"
-  }
+   assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Principal": {
+        "Service": "ec2.amazonaws.com"
+      },
+      "Effect": "Allow",
+      "Sid": ""
+    }
+  ]
+}
+EOF
 }
 
-resource "aws_instance" "BGapp_server" {
-  ami                    = data.aws_ami.aws-linux-2-latest.id
-  key_name               = "default-ec2"
-  instance_type          = "t2.micro"
-  vpc_security_group_ids = [aws_security_group.BGapp_sg.id]
-  subnet_id              = "subnet-073d3d18a1d5795ea"
-  //subnet_id = tolist(data.aws_subnet_ids.default_subnets.ids)[5]
+resource "aws_iam_policy_attachment" "AmazonEKSClusterPolicy" {
+  name = "AmazonEKSClusterPolicy"
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+  roles = [aws_iam_role.eksClusterRole_bg.name]
+}
 
-  connection {
-    type        = "ssh"
-    host        = self.public_ip
-    user        = "ec2-user"
-    private_key = file(var.aws_key_pair)
+resource "aws_iam_role_policy_attachment" "AmazonEKSServicePolicy" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSServicePolicy"
+  role       = aws_iam_role.eksClusterRole_bg.name
+}
+
+resource "aws_eks_cluster" "BGcluster" {
+  name = "BGcluster"
+  role_arn = aws_iam_role.eksClusterRole_bg.arn
+  depends_on = [aws_iam_role.eksClusterRole_bg]
+
+  vpc_config {
+    subnet_ids = ["subnet-032a69716a3249a39", "subnet-0c02bb6ec49a79209"]
   }
 
-  provisioner "remote-exec" {
-    inline = [
-      "sudo yum update -y",
-      "sudo amazon-linux-extras install -y docker",
-      "sudo usermod -a -G docker ec2-user",
-      "sudo service docker start",
-      "sudo docker pull remeric/board-game-selector:1.2",
-      "sudo docker run -d -t -i -p 80:80 remeric/board-game-selector:1.2"
-    ]
+}
+
+resource "aws_iam_role_policy_attachment" "AmazonEKSWorkerNodePolicy" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
+  role       = aws_iam_role.eksNodeRole_bg.name
+}
+
+resource "aws_iam_role_policy_attachment" "AmazonEKS_CNI_Policy" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
+  role       = aws_iam_role.eksNodeRole_bg.name
+}
+
+resource "aws_iam_role_policy_attachment" "AmazonEC2ContainerRegistryReadOnly" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+  role       = aws_iam_role.eksNodeRole_bg.name
+}
+
+resource "aws_eks_node_group" "BGnodes" {
+  cluster_name    = aws_eks_cluster.BGcluster.name
+  node_group_name = "bg_app"
+  node_role_arn   =  aws_iam_role.eksNodeRole_bg.arn
+  subnet_ids      = ["subnet-032a69716a3249a39", "subnet-0c02bb6ec49a79209"]
+
+  scaling_config {
+    desired_size = 1
+    max_size     = 1
+    min_size     = 1
   }
+
+    depends_on = [
+    aws_iam_role_policy_attachment.AmazonEKSWorkerNodePolicy,
+    aws_iam_role_policy_attachment.AmazonEKS_CNI_Policy,
+    aws_iam_role_policy_attachment.AmazonEC2ContainerRegistryReadOnly,
+  ]
+}
+
+resource "kubectl_manifest" "Man_Deploy" {
+  yaml_body = <<YAML
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: board-game-selector
+    version: v1
+  name: board-game-selector-v1
+  namespace: default
+spec:
+  replicas: 2
+  minReadySeconds: 30
+  selector:
+    matchLabels:
+      app: board-game-selector
+  strategy:
+   rollingUpdate:
+     maxSurge: 50%
+     maxUnavailable: 50%
+   type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: board-game-selector
+        version: v1
+    spec:
+      containers:
+      - image: remeric/board-game-selector:1.2
+        imagePullPolicy: Always
+        name: board-game-selector
+      restartPolicy: Always 
+      terminationGracePeriodSeconds: 45
+YAML
+}
+
+resource "kubectl_manifest" "LB_Deploy" {
+  yaml_body = <<YAML
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: board-game-selector
+  name: board-game-selector
+  namespace: default
+spec:
+  ports:
+  - nodePort: 30369
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: board-game-selector
+    version: v1
+  sessionAffinity: None
+  type: nodePort
+YAML
 }
