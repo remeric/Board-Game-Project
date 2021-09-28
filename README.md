@@ -4,7 +4,7 @@ The purpose of this project is to track my experience and knowledge in DevOps, a
 
 ## Board Game App Synopsis
 
-To build an application using modern DevOps tools that will eventually implement Ci/CD methodology.  The application itself will be a tool that will allow users to choose from available board games to play based on certain parameters such as number of plays present, and amount of time available to play.
+To build an application using modern DevOps tools that will eventually implement CI/CD methodology.  The application itself will be a tool that will allow users to choose from available board games to play based on certain parameters such as number of plays present, and amount of time available to play.
 
 ## Branches
 
