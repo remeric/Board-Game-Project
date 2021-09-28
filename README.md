@@ -12,9 +12,22 @@ Please see my various branches to check out other implementations of the applica
 
 ## Tools/languages I have started implementing to date
 
-AWS
-Python
-Flask
-Docker
-Kubernetes
-Terraform
+- AWS
+- Python
+- Flask
+- Docker
+- Kubernetes
+- Terraform
+
+## Tools/languages I have started practicing with/learning to date
+
+- AWS
+- Python
+- Flask
+- Docker
+- Kubernetes
+- Terraform
+- GCP
+- Azure
+- Jenkins
+- Azure DevOps
