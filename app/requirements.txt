@@ -1,2 +1,4 @@
 flask
 flask-WTF
+pandas
+openpyxl

@@ -1,8 +1,5 @@
-#Application to help users select a boardgame to play based on parameters
+import pandas
 
-#Using flask to present app via web when I launch app in Azure/AWS
-
-#Import flask module
 from flask import Flask, request, render_template, jsonify, redirect
 from flask.sessions import NullSession
 from flask_wtf import FlaskForm
@@ -25,8 +22,8 @@ def form():
 
     class BoardGame:
         
-        def __init__(self, name, playersmin, playersmax, time, timeperplayer):
-            self.name = name
+        def __init__(self, bgname, playersmin, playersmax, time, timeperplayer):
+            self.bgname = bgname
             self.playersmin = playersmin
             self.playersmax = playersmax
             self.time = time
@@ -39,15 +36,12 @@ def form():
             else:
                 return self.time
 
-    #Board Game List
+    excel_import = pandas.read_excel('games.xlsx', sheet_name='sheet')
+
     list = []
-    list.append( BoardGame("Splendor", 2, 4, 60, False))
-    list.append( BoardGame("StockPile", 2, 5, 45, False))
-    list.append( BoardGame("Terra Mystica", 2, 5, 30, True))
-    list.append( BoardGame("Mage Knight", 1, 4, 180, False))
-    list.append( BoardGame("Star Realms", 2, 2, 20, False))
-    list.append( BoardGame("Viticulture", 1, 6, 90, False))
-    list.append( BoardGame("Tesla vs Edison", 2, 6, 20, True))
+
+    for index, row in excel_import.iterrows():
+        list.append( BoardGame(str(row.bgname), int(row.playersmin), int(row.playersmax), int(row.time), bool(row.timeperplayer)))
 
     form = BGForm()
 
@@ -58,7 +52,7 @@ def form():
             if form.players.data >= obj.playersmin:
                 if form.players.data <= obj.playersmax:
                     if form.playtime.data >= allthattime:
-                        availablegames.append ("The game " + obj.name + " is available and takes " + str(obj.total_time()) + " minutes to play.")
+                        availablegames.append ("The game " + obj.bgname + " is available and takes " + str(obj.total_time()) + " minutes to play.")
 
         return jsonify(availablegames)
     return render_template('form.html', form=form)

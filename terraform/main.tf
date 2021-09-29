@@ -40,7 +40,7 @@ resource "aws_security_group" "BGapp_sg" {
     from_port = 22
     to_port   = 22
     protocol  = "tcp"
-    //need to add variable for cidr_blocks
+    # Automatically lookup your current public IP and set that as an allowed SSH IP
     cidr_blocks = ["${chomp(data.http.myip.body)}/32"]
   }
 
@@ -61,8 +61,8 @@ resource "aws_instance" "BGapp_server" {
   key_name               = "default-ec2"
   instance_type          = "t2.micro"
   vpc_security_group_ids = [aws_security_group.BGapp_sg.id]
-  subnet_id              = "subnet-073d3d18a1d5795ea"
-  //subnet_id = tolist(data.aws_subnet_ids.default_subnets.ids)[5]
+  subnet_id  = tolist(data.aws_subnet_ids.default_subnets.ids)[5]
+  depends_on = [data.aws_subnet_ids.default_subnets]
 
   connection {
     type        = "ssh"
@@ -71,14 +71,16 @@ resource "aws_instance" "BGapp_server" {
     private_key = file(var.aws_key_pair)
   }
 
+
+
   provisioner "remote-exec" {
     inline = [
       "sudo yum update -y",
       "sudo amazon-linux-extras install -y docker",
       "sudo usermod -a -G docker ec2-user",
       "sudo service docker start",
-      "sudo docker pull remeric/board-game-selector:1.2",
-      "sudo docker run -d -t -i -p 80:80 remeric/board-game-selector:1.2"
+      "sudo docker pull ${var.docker_hub_account}/board-game-selector:${var.application_version}",
+      "sudo docker run -d -t -i -p 80:80 ${var.docker_hub_account}/board-game-selector:${var.application_version}"
     ]
   }
 }
