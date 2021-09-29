@@ -11,19 +11,12 @@ To build an application using modern DevOps tools that will eventually implement
 Please see my various branches to check out other implementations of the application, such as the EKS_Build branch that utilizes Kubernetes on Amazon EKS behind a load balancer.  The branches are to show my experience but the main applicaiton I plan to run in free tier services to save on personal cost.
 
 ## Implementation
-<<<<<<< HEAD
 - Update ./app/games.xlsx with your own list of games
 - Build your docker image and push to your docker hub
 - In variables.tf:
   - Replace the aws_key_pair vairable with the link to your own private key (https://docs.aws.amazon.com/servicecatalog/latest/adminguide/getstarted-keypair.html) 
   - Replace the docker_hub_account variable with your own docker hub account
   - Replace the application_version variable with the current application version you created in your docker hub
-=======
-- In variables.tf:
-  - Replace the aws_key_pair vairable with the link to your own private key (https://docs.aws.amazon.com/servicecatalog/latest/adminguide/getstarted-keypair.html) 
-  - Replace the docker_hub_account variable with your own docker hub, or leave it if you plan to use my docker image
-  - Replace the application_version variable with the current application version
->>>>>>> d46270459248c5547cd5a77a744d2defd8cacc27
 - Run terraform apply from within the terraform folder
 - Grab the public_ip from the output and verify your app is up and running.
 
@@ -49,8 +42,4 @@ Notice:  These instructions are for those with some basic DevOps knowledge - if 
 - GCP
 - Azure
 - Jenkins
-<<<<<<< HEAD
 - Azure DevOps (started)
-=======
-- Azure DevOps
->>>>>>> d46270459248c5547cd5a77a744d2defd8cacc27
