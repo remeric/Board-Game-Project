@@ -13,7 +13,10 @@ Please see my various branches to check out other implementations of the applica
 ## Implementation
 - Update ./app/games.xlsx with your own list of games
 - Build your docker image and push to your docker hub
-- In variables.tf:
+- In terraform/backend-state:
+  - update bucket name for resournce aws_s3_bucket to your desired bucket name
+- Choose an environment in terraform folder, I suggest AWS-ECS for balance of functionality and cost
+- In variables.tf in desired environment:
   - Replace the aws_key_pair vairable with the link to your own private key (https://docs.aws.amazon.com/servicecatalog/latest/adminguide/getstarted-keypair.html) 
   - Replace the docker_hub_account variable with your own docker hub account
   - Replace the application_version variable with the current application version you created in your docker hub
