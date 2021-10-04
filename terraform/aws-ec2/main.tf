@@ -1,8 +1,15 @@
-#https://docs.aws.amazon.com/AmazonECS/latest/developerguide/docker-basics.html
-#information added from above URL to dockerfile and main.tf to install docker and build and launch container
+#Installing on AWS EC2 image - testing/practice only
+#Recommed installing on AWS ECS as it is a containerization service with the same cost as the EC2 model (you just pay for the server you use)
 
-//create bucket
-//Secret Keys
+terraform {
+  backend "s3" {
+    bucket = "terraform-backend-state-remeric"
+    key    = "bgapp/aws-ec2/terraform.tfstate"
+    region = "us-east-1"
+    dynamodb_table = "application_locks"
+    encrypt = "true"
+  }
+}
 
 terraform {
   required_providers {
@@ -12,7 +19,6 @@ terraform {
     }
   }
 }
-
 
 provider "aws" {
   region = "us-east-1"
@@ -71,7 +77,9 @@ resource "aws_instance" "BGapp_server" {
     private_key = file(var.aws_key_pair)
   }
 
-
+  tags = {
+    Name = "BGappinstance"
+  }
 
   provisioner "remote-exec" {
     inline = [
