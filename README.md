@@ -20,6 +20,8 @@ Please see my various branches to check out other implementations of the applica
   - Replace the aws_key_pair vairable with the link to your own private key (https://docs.aws.amazon.com/servicecatalog/latest/adminguide/getstarted-keypair.html) 
   - Replace the docker_hub_account variable with your own docker hub account
   - Replace the application_version variable with the current application version you created in your docker hub
+- In Main.tf of desired environment
+  - update the bucket name on your S3 backend config
 - Run terraform apply from within the terraform folder
 - Grab the public_ip from the output and verify your app is up and running.
 

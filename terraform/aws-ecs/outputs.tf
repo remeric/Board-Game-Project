@@ -1,3 +1,3 @@
-output "public_dns" {
-  value = aws_instance.BGapp_server.public_dns
+output "lb_hostname" {
+  value = aws_lb.BGapp_load_balancer.dns_name
 }

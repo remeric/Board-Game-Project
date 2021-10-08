@@ -6,11 +6,11 @@
 
 terraform {
   backend "s3" {
-    bucket = "terraform-backend-state-remeric"
-    key    = "bgapp/aws-eks/terraform.tfstate"
-    region = "us-east-1"
+    bucket         = "terraform-backend-state-remeric"
+    key            = "bgapp/aws-eks/terraform.tfstate"
+    region         = "us-east-1"
     dynamodb_table = "application_locks"
-    encrypt = "true"
+    encrypt        = "true"
   }
 }
 
@@ -36,13 +36,13 @@ provider "kubernetes" {
   host                   = data.aws_eks_cluster.BGcluster.endpoint
   token                  = data.aws_eks_cluster_auth.BGcluster.token
   cluster_ca_certificate = base64decode(data.aws_eks_cluster.BGcluster.certificate_authority.0.data)
-  config_path = "~/.kube/config"
+  config_path            = "~/.kube/config"
 }
 
 resource "aws_iam_role" "eksClusterRole_bg" {
   name = "eksClusterRole_bg"
 
-   assume_role_policy = <<EOF
+  assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -62,7 +62,7 @@ EOF
 resource "aws_iam_role" "eksNodeRole_bg" {
   name = "eksNodeRole_bg"
 
-   assume_role_policy = <<EOF
+  assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -80,9 +80,9 @@ EOF
 }
 
 resource "aws_iam_policy_attachment" "AmazonEKSClusterPolicy" {
-  name = "AmazonEKSClusterPolicy"
+  name       = "AmazonEKSClusterPolicy"
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
-  roles = [aws_iam_role.eksClusterRole_bg.name]
+  roles      = [aws_iam_role.eksClusterRole_bg.name]
 }
 
 resource "aws_iam_role_policy_attachment" "AmazonEKSServicePolicy" {
@@ -91,8 +91,8 @@ resource "aws_iam_role_policy_attachment" "AmazonEKSServicePolicy" {
 }
 
 resource "aws_eks_cluster" "BGcluster" {
-  name = "BGcluster"
-  role_arn = aws_iam_role.eksClusterRole_bg.arn
+  name       = "BGcluster"
+  role_arn   = aws_iam_role.eksClusterRole_bg.arn
   depends_on = [aws_iam_role.eksClusterRole_bg]
 
   vpc_config {
@@ -119,7 +119,7 @@ resource "aws_iam_role_policy_attachment" "AmazonEC2ContainerRegistryReadOnly" {
 resource "aws_eks_node_group" "BGnodes" {
   cluster_name    = aws_eks_cluster.BGcluster.name
   node_group_name = "bg_app"
-  node_role_arn   =  aws_iam_role.eksNodeRole_bg.arn
+  node_role_arn   = aws_iam_role.eksNodeRole_bg.arn
   subnet_ids      = ["subnet-032a69716a3249a39", "subnet-0c02bb6ec49a79209"]
 
   scaling_config {
@@ -128,7 +128,7 @@ resource "aws_eks_node_group" "BGnodes" {
     min_size     = 1
   }
 
-    depends_on = [
+  depends_on = [
     aws_iam_role_policy_attachment.AmazonEKSWorkerNodePolicy,
     aws_iam_role_policy_attachment.AmazonEKS_CNI_Policy,
     aws_iam_role_policy_attachment.AmazonEC2ContainerRegistryReadOnly,
@@ -163,7 +163,7 @@ spec:
         version: v1
     spec:
       containers:
-      - image: remeric/board-game-selector:1.2
+      - image: remeric/board-game-selector:1.3
         imagePullPolicy: Always
         name: board-game-selector
       restartPolicy: Always 
@@ -190,6 +190,6 @@ spec:
     app: board-game-selector
     version: v1
   sessionAffinity: None
-  type: nodePort
+  type: LoadBalancer
 YAML
 }

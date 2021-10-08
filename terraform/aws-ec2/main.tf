@@ -3,11 +3,11 @@
 
 terraform {
   backend "s3" {
-    bucket = "terraform-backend-state-remeric"
-    key    = "bgapp/aws-ec2/terraform.tfstate"
-    region = "us-east-1"
+    bucket         = "terraform-backend-state-remeric"
+    key            = "bgapp/aws-ec2/terraform.tfstate"
+    region         = "us-east-1"
     dynamodb_table = "application_locks"
-    encrypt = "true"
+    encrypt        = "true"
   }
 }
 
@@ -67,8 +67,8 @@ resource "aws_instance" "BGapp_server" {
   key_name               = "default-ec2"
   instance_type          = "t2.micro"
   vpc_security_group_ids = [aws_security_group.BGapp_sg.id]
-  subnet_id  = tolist(data.aws_subnet_ids.default_subnets.ids)[5]
-  depends_on = [data.aws_subnet_ids.default_subnets]
+  subnet_id              = tolist(data.aws_subnet_ids.default_subnets.ids)[5]
+  depends_on             = [data.aws_subnet_ids.default_subnets]
 
   connection {
     type        = "ssh"

@@ -4,5 +4,5 @@ output "eks_cluster_endpoint" {
 }
 
 output "eks_cluster_certificate_authority" {
-  value = aws_eks_cluster.BGcluster.certificate_authority 
+  value = aws_eks_cluster.BGcluster.certificate_authority
 }
