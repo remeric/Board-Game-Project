@@ -7,9 +7,6 @@ resources:
 variables:
   tag: '$(Build.BuildId)'
 
-#stage 1
-#build docker image
-
 stages:
 - stage: Build
   displayName: Build image
@@ -27,13 +24,19 @@ stages:
         command: 'buildAndPush'
         Dockerfile: '**/app/Dockerfile'
         tags: '$(tag)'
-    - task: CopyFiles@2
+
+- stage: Deploy
+  displayName: Deploy image
+  jobs:
+  - job: Deploy
+    displayName: Deploy
+    pool:
+      vmImage: 'Ubuntu-latest'
+    steps: 
+    - task: TerraformCLI@0
       inputs:
-        SourceFolder: '$(System.DefaultWorkingDirectory)'
-        Contents: '**/*.yaml'
-        TargetFolder: '$(Build.ArtifactStagingDirectory)'
-    - task: PublishBuildArtifacts@1
-      inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-        ArtifactName: 'manifest'
-        publishLocation: 'Container'
+        command: 'apply'
+        workingDirectory: '**/terraform/aws-ecs/'
+        commandOptions: '-var application_version='$(tag)'
+        allowTelemetryCollection: false
+
