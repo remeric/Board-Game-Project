@@ -34,7 +34,7 @@ resource "aws_ecs_task_definition" "BGapp_Container_Task_Def" {
   [
     {
       "name": "BGapp",
-      "image": "remeric/board-game-selector:1.3",
+      "image": "remeric/board-game-selector:${var.application_version}",
       "essential": true,
       "portMappings": [
         {

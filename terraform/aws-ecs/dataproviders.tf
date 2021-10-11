@@ -8,7 +8,7 @@ data "aws_ami" "aws-linux-2-ecs-latest" {
   owners      = ["amazon"]
   filter {
     name   = "name"
-    values = ["amzn2-ami-ecs-hvm-*"]
+    values = ["amzn2-ami-ecs-hvm-*x86_64*"]
   }
 
 }
@@ -20,3 +20,7 @@ data "http" "myip" {
 data "template_file" "user_data" {
   template = file("${path.module}/templates/user_data.sh")
 }
+
+#data "docker_image" "board-game-selector" {
+#  name = "remeric/board-game-selector"
+#}
