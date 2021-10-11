@@ -45,8 +45,5 @@ stages:
         script: |
           # Write your commands here
           
-          ls
-          ls **/terraform
           ls **/terraform/aws-ecs
-          ls **/terraform/aws-ecs/
 
