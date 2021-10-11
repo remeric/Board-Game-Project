@@ -37,6 +37,6 @@ stages:
       inputs:
         command: 'apply'
         workingDirectory: '**/terraform/aws-ecs/'
-        commandOptions: '-var application_version='$(tag)'
+        commandOptions: '-var application_version='$(tag)''
         allowTelemetryCollection: false
 
