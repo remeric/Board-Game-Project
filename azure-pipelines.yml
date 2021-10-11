@@ -7,7 +7,7 @@ resources:
 variables:
   tag: '$(Build.BuildId)'
 
- stages:
+stages:
 # - stage: Build
 #   displayName: Build image
 #   jobs:
