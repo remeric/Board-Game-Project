@@ -1,4 +1,4 @@
-#Reminders:
+#Reminders for me:
 
 #Using defvault VPN, using below for Public subnets
 #[tolist(data.aws_subnet_ids.default_subnets.ids)[1], tolist(data.aws_subnet_ids.default_subnets.ids)[2], tolist(data.aws_subnet_ids.default_subnets.ids)[3]]
