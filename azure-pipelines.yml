@@ -24,8 +24,7 @@ stages:
       inputs:
         containerRegistry: 'DockerHubRemeric'
         repository: 'remeric/board-game-selector'
-        #command: 'buildAndPush'
-        command: 'build'
+        command: 'buildAndPush'
         Dockerfile: '**/app/Dockerfile'
         tags: '$(tag)'
     - task: CopyFiles@2
