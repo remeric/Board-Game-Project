@@ -50,7 +50,7 @@ resource "aws_ecs_task_definition" "BGapp_Container_Task_Def" {
   requires_compatibilities = ["EC2"]
   network_mode             = "bridge"
   memory                   = 512
-  cpu                      = 256
+  cpu                      = 512
   execution_role_arn       = aws_iam_role.ecsTaskExecutionRole.arn
 
 }
@@ -67,9 +67,5 @@ resource "aws_ecs_service" "BGapp_ecs_service" {
     container_name   = aws_ecs_task_definition.BGapp_Container_Task_Def.family
     container_port   = 80
   }
-
-  #  network_configuration {
-  #    subnets = [tolist(data.aws_subnet_ids.default_subnets.ids)[4], tolist(data.aws_subnet_ids.default_subnets.ids)[5], tolist(data.aws_subnet_ids.default_subnets.ids)[0]]
-  #  }
 
 }

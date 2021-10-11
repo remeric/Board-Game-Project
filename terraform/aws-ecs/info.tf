@@ -10,3 +10,5 @@
 
 #https://github.com/terraform-aws-modules/terraform-aws-ecs/blob/master/examples/complete-ecs/main.tf
 
+#https://aws.amazon.com/premiumsupport/knowledge-center/create-alb-auto-register/
+

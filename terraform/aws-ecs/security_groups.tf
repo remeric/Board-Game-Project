@@ -32,13 +32,13 @@ resource "aws_security_group" "BGapp_ecs_sg" {
     security_groups = ["${aws_security_group.BGapp_lb_sg.id}"]
   }
 
-    ingress {
-      from_port = 22
-      to_port   = 22
-      protocol  = "tcp"
-      # Automatically lookup your current public IP and set that as an allowed SSH IP
-      cidr_blocks = ["${chomp(data.http.myip.body)}/32"]
-    }
+  ingress {
+    from_port = 22
+    to_port   = 22
+    protocol  = "tcp"
+    # Automatically lookup your current public IP and set that as an allowed SSH IP
+    cidr_blocks = ["${chomp(data.http.myip.body)}/32"]
+  }
 
   egress {
     from_port   = 0
