@@ -33,6 +33,12 @@ stages:
     pool:
       vmImage: 'Ubuntu-latest'
     steps: 
+    task: TerraformCLI@0
+      inputs:
+        command: 'init'
+        workingDirectory: '**/terraform/aws-ecs'
+        commandOptions: '-var client_id=$(client_id) -var client_secret=$(client_secret) -var ssh_public_key=$(publickey.securefilepath)'
+        allowTelemetryCollection: false
     - task: TerraformCLI@0
       inputs:
         command: 'apply'
