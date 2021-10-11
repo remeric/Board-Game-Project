@@ -29,7 +29,7 @@ def form():
             self.time = time
             self.timeperplayer = timeperplayer
 
-    #Fucntion to calculate total play time
+    #Fucntion to calculate the total play time
         def total_time(self):
             if self.timeperplayer == True:
                 return self.time * form.players.data
