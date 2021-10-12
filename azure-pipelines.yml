@@ -33,7 +33,7 @@ stages:
     pool:
       vmImage: 'Ubuntu-latest'
     steps: 
-      - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@0
+      - task: TerraformInstaller@0
         displayName: install terraform
         inputs:
           terraformVersion: 'latest'
