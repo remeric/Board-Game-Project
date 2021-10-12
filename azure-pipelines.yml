@@ -37,18 +37,19 @@ stages:
         name: publickey
         inputs:
           secureFile: 'default-ec2.pem'
+      # - task: Bash@3
+      #   inputs:
+      #     targetType: 'inline'
+      #     script: |
+      #       export AWS_ACCESS_KEY_ID=$(client_id)
+      #       export AWS_SECRET_ACCESS_KEY=$(client_secret)
+      #       export AWS_DEFAULT_REGION=us-east-1
+      #       env
       - task: Bash@3
         inputs:
           targetType: 'inline'
           script: |
-            export AWS_ACCESS_KEY_ID=$(client_id)
-            export AWS_SECRET_ACCESS_KEY=$(client_secret)
-            export AWS_DEFAULT_REGION=us-east-1
-            env
-      - task: Bash@3
-        inputs:
-          targetType: 'inline'
-          script: |
+            #!/bin/bash
             echo show current directory
             pwd
             echo show environment variables don't exit
@@ -82,6 +83,7 @@ stages:
         inputs:
           targetType: 'inline'
           script: |
+            #!/bin/bash
             echo print environment variables
             printenv AWS_ACCESS_KEY_I
             printenv AWS_SECRET_ACCESS_KEY
