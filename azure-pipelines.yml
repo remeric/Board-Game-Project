@@ -33,16 +33,10 @@ stages:
     pool:
       vmImage: 'Ubuntu-latest'
     steps: 
-      # - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-installer.TerraformInstaller@0
-      #   displayName: install terraform
-      #   inputs:
-      #     terraformVersion: 'latest'
-
       - task: DownloadSecureFile@1
         name: publickey
         inputs:
           secureFile: 'default-ec2.pem'
-
       - task: Bash@3
         inputs:
           targetType: 'inline'
@@ -52,22 +46,19 @@ stages:
             export AWS_SECRET_ACCESS_KEY=$(client_secret)
             export AWS_DEFAULT_REGION
             env
-
       - task: TerraformCLI@0
         inputs:
           command: 'init'
           workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/aws-ecs'
           commandOptions: '-backend-config="access_key=$(client_id)" -backend-config="secret_key=$(client_secret)" '
           backendType: 'selfConfigured'
+          allowTelemetryCollection: true     
+      - task: TerraformCLI@0
+        inputs:
+          command: 'apply'
+          workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/aws-ecs'
+          commandOptions: '-var client_id=$(client_id) -var client_secret=$(client_secret) -var application_version=92'
           allowTelemetryCollection: true
-      
-      # - task: TerraformCLI@0
-      #   inputs:
-      #     command: 'apply'
-      #     workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/aws-ecs'
-      #     commandOptions: '-var client_id=$(client_id) -var client_secret=$(client_secret) -var application_version=92'
-      #     allowTelemetryCollection: true
-
       - task: Bash@3
         inputs:
           targetType: 'inline'
