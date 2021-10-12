@@ -1,6 +1,6 @@
 
 resource "aws_launch_configuration" "docker_launch_cfg" {
-  image_id                    = data.aws_ami.aws-linux-2-ecs-latest.id
+  image_id = data.aws_ami.aws-linux-2-ecs-latest.id
   #image_id = "ami-04942e54b391af5d0"
   instance_type               = "t2.micro"
   key_name                    = "default-ec2"
