@@ -52,7 +52,7 @@ stages:
             #!/bin/bash
             echo show current directory
             pwd
-            echo show environment variables don't exit
+            echo show environment variables dont exit
             printenv AWS_ACCESS_KEY_I
             printenv AWS_SECRET_ACCESS_KEY
             printenv AWS_DEFAULT_REGION
