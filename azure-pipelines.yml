@@ -57,7 +57,7 @@ stages:
         inputs:
           command: 'init'
           workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/aws-ecs'
-          commandOptions: '-backend-config="access_key=$(client_id)" -backend-config="secret_key=$(client_secret)"'
+          commandOptions: '-backend-config="access_key=$(client_id)" -backend-config="secret_key=$(client_secret)" '
           backendType: 'selfConfigured'
           allowTelemetryCollection: true
       
@@ -65,7 +65,7 @@ stages:
         inputs:
           command: 'apply'
           workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/aws-ecs'
-          commandOptions: '-var client_id="$(client_id)" -var client_secret="$(client_secret)" -var application_version="92"'
-          # commandOptions: '-var 'client_id=$(client_id)' -var 'client_secret=$(client_secret)' -var 'ssh_public_key=$(publickey.securefilepath)' -var 'application_version=92''
+          commandOptions: '-var 'client_id=$(client_id) -var 'client_secret=$(client_secret) -var 'application_version=92'
           allowTelemetryCollection: false
 
+# -var ssh_public_key=$(publickey.securefilepath) 
