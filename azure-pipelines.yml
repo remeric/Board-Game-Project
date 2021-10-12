@@ -43,12 +43,12 @@ stages:
         inputs:
           secureFile: 'default-ec2.pem'
 
-      - task: Bash@3
-        inputs:
-          targetType: 'inline'
-          script: |
-            AWS_ACCESS_KEY_ID=$(client_id)
-            AWS_SECRET_ACCESS_KEY=$(client_secret)
+      # - task: Bash@3
+      #   inputs:
+      #     targetType: 'inline'
+      #     script: |
+      #       AWS_ACCESS_KEY_ID=$(client_id)
+      #       AWS_SECRET_ACCESS_KEY=$(client_secret)
 
       - task: TerraformCLI@0
         inputs:
@@ -62,6 +62,6 @@ stages:
         inputs:
           command: 'apply'
           workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/aws-ecs'
-          commandOptions: '-var application_version=92'
+          commandOptions: '-var client_id=$(client_id) -var client_secret=$(client_secret) -var application_version=92'
           allowTelemetryCollection: false
 
