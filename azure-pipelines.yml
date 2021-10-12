@@ -41,10 +41,9 @@ stages:
         inputs:
           targetType: 'inline'
           script: |
-            env
-            export AWS_ACCESS_KEY_ID=$(client_id)
-            export AWS_SECRET_ACCESS_KEY=$(client_secret)
-            export AWS_DEFAULT_REGION
+            AWS_ACCESS_KEY_ID=$(client_id)
+            AWS_SECRET_ACCESS_KEY=$(client_secret)
+            AWS_DEFAULT_REGION=us-east-1
             env
       - task: TerraformCLI@0
         inputs:
