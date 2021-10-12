@@ -38,6 +38,11 @@ stages:
         inputs:
           terraformVersion: 'latest'
 
+      - task: DownloadSecureFile@1
+        name: publickey
+        inputs:
+        secureFile: 'default-ec2.pem'
+
       - task: Bash@3
         inputs:
           targetType: 'inline'
