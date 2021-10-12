@@ -58,10 +58,10 @@ stages:
           backendType: 'selfConfigured'
           allowTelemetryCollection: true
       
-    # - task: TerraformCLI@0
-    #   inputs:
-    #     command: 'apply'
-    #     workingDirectory: '**/terraform/aws-ecs'
-    #     commandOptions: '-var client_id=$(client_id) -var client_secret=$(client_secret) -var ssh_public_key=$(publickey.securefilepath) -var application_version=92'
-    #     allowTelemetryCollection: false
+      - task: TerraformCLI@0
+        inputs:
+          command: 'apply'
+          workingDirectory: '**/terraform/aws-ecs'
+          commandOptions: '-var application_version=92'
+          allowTelemetryCollection: false
 
