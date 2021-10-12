@@ -66,6 +66,6 @@ stages:
           command: 'apply'
           workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/aws-ecs'
           commandOptions: '-var 'client_id=$(client_id)' -var 'client_secret=$(client_secret)' -var 'application_version=92''
-          #commandOptions: '-var 'client_id=$(client_id)' -var 'client_secret=$(client_secret)' -var 'ssh_public_key=$(publickey.securefilepath)' -var 'application_version=92''
+          # commandOptions: '-var 'client_id=$(client_id)' -var 'client_secret=$(client_secret)' -var 'ssh_public_key=$(publickey.securefilepath)' -var 'application_version=92''
           allowTelemetryCollection: false
 
