@@ -57,18 +57,17 @@ stages:
             printenv AWS_SECRET_ACCESS_KEY
             printenv AWS_DEFAULT_REGION
             echo add anvironment variables
-            sudo nano /etc/environment
             export AWS_ACCESS_KEY_ID=$(client_id)
             export AWS_SECRET_ACCESS_KEY=$(client_secret)
             export AWS_DEFAULT_REGION=us-east-1
-            source /etc/environment
+            
             echo print environment variables
             printenv AWS_ACCESS_KEY_ID
             printenv AWS_SECRET_ACCESS_KEY
             printenv AWS_DEFAULT_REGION
             echo print all environment variables
             env
-      # - task: TerraformCLI@0
+          noRc: false
       #   inputs:
       #     command: 'init'
       #     workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/aws-ecs'
@@ -92,3 +91,5 @@ stages:
             printenv AWS_DEFAULT_REGION
 
 # -var ssh_public_key=$(publickey.securefilepath) 
+
+
