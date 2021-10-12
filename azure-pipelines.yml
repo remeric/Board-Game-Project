@@ -34,6 +34,7 @@ stages:
       vmImage: 'Ubuntu-latest'
     steps: 
       - task: TerraformInstaller@0
+        displayName: install terraform
         inputs:
           terraformVersion: 'latest'
       - task: TerraformCLI@0
