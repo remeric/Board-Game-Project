@@ -57,10 +57,11 @@ stages:
             printenv AWS_SECRET_ACCESS_KEY
             printenv AWS_DEFAULT_REGION
             echo add anvironment variables
+            vi ~/.bashrc
             export AWS_ACCESS_KEY_ID=$(client_id)
             export AWS_SECRET_ACCESS_KEY=$(client_secret)
             export AWS_DEFAULT_REGION=us-east-1
-            
+            source ~/.bashrc
             echo print environment variables
             printenv AWS_ACCESS_KEY_ID
             printenv AWS_SECRET_ACCESS_KEY
