@@ -33,10 +33,10 @@ stages:
     pool:
       vmImage: 'Ubuntu-latest'
     steps: 
-      - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-installer.TerraformInstaller@0
-        displayName: install terraform
-        inputs:
-          terraformVersion: 'latest'
+      # - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-installer.TerraformInstaller@0
+      #   displayName: install terraform
+      #   inputs:
+      #     terraformVersion: 'latest'
 
       - task: DownloadSecureFile@1
         name: publickey
