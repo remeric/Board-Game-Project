@@ -43,15 +43,15 @@ stages:
         inputs:
           secureFile: 'default-ec2.pem'
 
-      - task: Bash@3
-        inputs:
-          targetType: 'inline'
-          script: |
-            env
-            sudo export AWS_ACCESS_KEY_ID=$(client_id)
-            sudo export AWS_SECRET_ACCESS_KEY=$(client_secret)
-            sudo export AWS_DEFAULT_REGION
-            env
+      # - task: Bash@3
+      #   inputs:
+      #     targetType: 'inline'
+      #     script: |
+      #       env
+      #       sudo export AWS_ACCESS_KEY_ID=$(client_id)
+      #       sudo export AWS_SECRET_ACCESS_KEY=$(client_secret)
+      #       sudo export AWS_DEFAULT_REGION
+      #       env
 
       - task: TerraformCLI@0
         inputs:
