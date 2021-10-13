@@ -31,71 +31,39 @@ stages:
 #         Dockerfile: '**/app/Dockerfile'
 #         tags: '$(tag)'
 
-- stage: Update
-  displayName: Update
-  jobs:
-  - job: Update
-    displayName: Update Terraform Task
-    pool:
-      vmImage: 'Ubuntu-latest'
-    steps: 
-      - task: DownloadSecureFile@1
-        name: publickey
-        inputs:
-          secureFile: 'default-ec2.pem'
-      # - task: Bash@3
-      #   inputs:
-      #     targetType: 'inline'
-      #     script: |
-      #       #!/bin/bash
-      #       #For verifying and troubleshooting environment variables for AWS login
+# - stage: Update
+#   displayName: Update
+#   jobs:
+#   - job: Update
+#     displayName: Update Terraform Task
+#     pool:
+#       vmImage: 'Ubuntu-latest'
+#     steps: 
+#       - task: DownloadSecureFile@1
+#         name: publickey
+#         inputs:
+#           secureFile: 'default-ec2.pem'
 
-
-      #       echo show current directory
-      #       pwd
-
-      #       echo show environment variables dont exit
-      #       printenv AWS_ACCESS_KEY_ID
-      #       printenv AWS_SECRET_ACCESS_KEY
-      #       printenv AWS_DEFAULT_REGION
-
-      #       echo add anvironment variables
-      #       echo AWS_ACCESS_KEY_ID=$(client_id) >> ~/.bashrc
-      #       echo AWS_SECRET_ACCESS_KEY=$(client_secret) >> ~/.bashrc
-      #       echo AWS_DEFAULT_REGION=us-east-1 >> ~/.bashrc
-      #       source ~/.bashrc
-
-      #       echo print environment variables
-      #       printenv AWS_ACCESS_KEY_ID
-      #       printenv AWS_SECRET_ACCESS_KEY
-      #       printenv AWS_DEFAULT_REGION
-
-      #       echo show bashrc file
-      #       cat ~/.bashrc
-
-      #       echo print all environment variables
-      #       env
-      #     noRc: false
-      - task: TerraformCLI@0  
-        inputs:
-          command: 'init'
-          workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/aws-ecs'
-          commandOptions: '-backend-config="access_key=$(access_key)" -backend-config="secret_key=$(secret_key)" '
-          backendType: 'selfConfigured'
-          allowTelemetryCollection: true
-      - task: TerraformCLI@0
-        inputs:
-          command: 'apply'
-          workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/aws-ecs'
-          commandOptions: '-var access_key=$(access_key) -var secret_key=$(secret_key) -var application_version=92'
-          allowTelemetryCollection: true
-      - task: Bash@3
-        inputs:
-          targetType: 'inline'
-          script: |
-            #!/bin/bash
-            #Verifying global environmental variables are still here
-            echo print environment variables
+#       - task: TerraformCLI@0  
+#         inputs:
+#           command: 'init'
+#           workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/aws-ecs'
+#           commandOptions: '-backend-config="access_key=$(access_key)" -backend-config="secret_key=$(secret_key)" '
+#           backendType: 'selfConfigured'
+#           allowTelemetryCollection: true
+#       - task: TerraformCLI@0
+#         inputs:
+#           command: 'apply'
+#           workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/aws-ecs'
+#           commandOptions: '-var access_key=$(access_key) -var secret_key=$(secret_key) -var application_version=92'
+#           allowTelemetryCollection: true
+#       - task: Bash@3
+#         inputs:
+#           targetType: 'inline'
+#           script: |
+#             #!/bin/bash
+#             #Verifying global environmental variables are still here
+#             echo print environment variables
 
 - stage: Deploy
   displayName: Deploy Container in ECS
@@ -110,7 +78,9 @@ stages:
           targetType: 'inline'
           script: |
             #Install AWS Tools
-            msiexec.exe /i https://awscli.amazonaws.com/AWSCLIV2.msi /qn
+            start-Process "msiexec.exe" -argumentlist "/i https://awscli.amazonaws.com/AWSCLIV2.msi /qn" -Wait
+
+            aws --version
 
             # Set AWS credentials
             Set-AWSCredential -AccessKey $(access_key) -SecretKey $(secret_key) -StoreAs default
