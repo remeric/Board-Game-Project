@@ -31,8 +31,8 @@ stages:
 #         Dockerfile: '**/app/Dockerfile'
 #         tags: '$(tag)'
 
-- stage: Deploy
-  displayName: Deploy image
+- stage: Update
+  displayName: Update Terraform Task
   jobs:
   - job: Deploy
     displayName: Deploy
@@ -96,6 +96,46 @@ stages:
             #!/bin/bash
             #Verifying global environmental variables are still here
             echo print environment variables
+
+- stage: Deploy
+  displayName: Deploy Container in ECS
+  jobs:
+  - job: Deploy
+    displayName: Deploy
+    pool:
+      vmImage: 'Ubuntu-latest'
+    steps:
+      - task: PowerShell@2
+        inputs:
+          targetType: 'inline'
+          script: |
+            # Set AWS credentials
+            Set-AWSCredential -AccessKey $(access_key) -SecretKey $(secret_key) -StoreAs default
+
+            # Query for name of cluster and service (assuming you left cluster and service names the same from the terraform script)
+            
+            $clusterlist = aws ecs list-clusters --query 'clusterArns'
+            $clusters = $clusterlist | ConvertFrom-Json
+            
+            foreach ($cluster in $clusters) {
+                If ($cluster -like "*BGapp_ECS_cluster*") {
+                    $clusterarn = $cluster
+                    echo $clusterarn
+                }
+            }
+            
+            $servicelist = aws ecs list-services --cluster $clusterarn --query 'serviceArns'
+            $services = $servicelist | ConvertFrom-Json
+            
+            foreach ($service in $services) {
+                If ($service -like "*BGapp_ECS_service*") {
+                    $servicearn = $service
+                    echo $servicearn
+                }
+            }
+            
+            #update service that is running task
+            aws ecs update-service --cluster $clusterarn --service <service name> --force-new-deployment
 
 # -var ssh_public_key=$(publickey.securefilepath) 
 
