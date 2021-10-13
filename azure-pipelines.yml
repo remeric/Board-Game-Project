@@ -6,7 +6,7 @@ resources:
 
 variables:
   tag: '$(Build.BuildId)'
-  TEST_TEST=test
+  TEST_TEST: 'test'
 
 stages:
 # - stage: Build
