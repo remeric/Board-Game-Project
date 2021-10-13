@@ -85,12 +85,14 @@ stages:
             }
 
             #Doublecheck Version
+            Write-Host "Version Information"
             Get-Host
 
             #Install AWS Tools
             #start-Process "msiexec.exe" -argumentlist "/i https://awscli.amazonaws.com/AWSCLIV2.msi /qn" -Wait
 
             #Check aws --version
+            Write-Host "AWS Version Information"
             aws --version
 
             # Set AWS credentials
@@ -98,6 +100,7 @@ stages:
 
             # Query for name of cluster and service (assuming you left cluster and service names the same from the terraform script)
             
+            Write-Host "Getting Cluster"
             $clusterlist = aws ecs list-clusters --query 'clusterArns'
             $clusters = $clusterlist | ConvertFrom-Json
             
@@ -107,7 +110,10 @@ stages:
                     echo $clusterarn
                 }
             }
-            
+            Write-Host "Cluster ARN $clusterarn"
+
+
+            Write-Host "Getting Service ARN"
             $servicelist = aws ecs list-services --cluster $clusterarn --query 'serviceArns'
             $services = $servicelist | ConvertFrom-Json
             
@@ -117,11 +123,8 @@ stages:
                     echo $servicearn
                 }
             }
+            Write-Host "Service ARN $servicearn"
             
-            #Output Vairables
-            $clusterarn
-            $servicearn
-
             #update service that is running task
             #aws ecs update-service --cluster $clusterarn --service $servicearn --region us-east-1 --force-new-deployment
 
