@@ -72,10 +72,10 @@ stages:
     pool:
       vmImage: 'windows-2022'
     steps:
-      - task: PowerShell@2
-        inputs:
-          targetType: 'inline'
-          script: |
+      # - task: PowerShell@2
+      #   inputs:
+      #     targetType: 'inline'
+      #     script: |
 #             #Install AWS Tools
 #             #start-Process "msiexec.exe" -argumentlist "/i https://awscli.amazonaws.com/AWSCLIV2.msi /qn" -Wait
 
@@ -111,7 +111,6 @@ stages:
 
 #             #update service that is running task
 #             aws ecs update-service --cluster $clusterarn --service $servicearn --region us-east-1 --force-new-deployment
-              get-host
 
       - task: AWSPowerShellModuleScript@1
         inputs:
