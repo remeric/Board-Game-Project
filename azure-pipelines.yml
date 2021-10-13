@@ -78,12 +78,12 @@ stages:
           targetType: 'inline'
           script: |
             #Install AWS Tools
-            start-Process "msiexec.exe" -argumentlist "/i https://awscli.amazonaws.com/AWSCLIV2.msi /qn" -Wait
+            #start-Process "msiexec.exe" -argumentlist "/i https://awscli.amazonaws.com/AWSCLIV2.msi /qn" -Wait
 
             aws --version
 
             # Set AWS credentials
-            Set-AWSCredential -AccessKey $(access_key) -SecretKey $(secret_key) -StoreAs default
+            #Set-AWSCredential -AccessKey $(access_key) -SecretKey $(secret_key) -StoreAs default
 
             # Query for name of cluster and service (assuming you left cluster and service names the same from the terraform script)
             
