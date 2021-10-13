@@ -80,14 +80,14 @@ stages:
         inputs:
           command: 'init'
           workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/aws-ecs'
-          commandOptions: '-backend-config="access_key=$(client_id)" -backend-config="secret_key=$(client_secret)" '
+          commandOptions: '-backend-config="access_key=$(access_key)" -backend-config="secret_key=$(secret_key)" '
           backendType: 'selfConfigured'
           allowTelemetryCollection: true
       - task: TerraformCLI@0
         inputs:
           command: 'apply'
           workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/aws-ecs'
-          commandOptions: '-var application_version=92'
+          commandOptions: '-var access_key=$(access_key) -var secret_key=$(secret_key) -var application_version=92'
           allowTelemetryCollection: true
       - task: Bash@3
         inputs:
