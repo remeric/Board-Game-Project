@@ -105,9 +105,9 @@ stages:
           script: |
           
             # Set AWS credentials
-            SETX AWS_ACCESS_KEY_ID $(access_key)
-            SETX AWS_SECRET_ACCESS_KEY $(secret_key)
-            SETX AWS_DEFAULT_REGION us-east-1
+            # SETX AWS_ACCESS_KEY_ID $(access_key)
+            # SETX AWS_SECRET_ACCESS_KEY $(secret_key)
+            # SETX AWS_DEFAULT_REGION us-east-1
             #Set-AWSCredential -AccessKey $(access_key) -SecretKey $(secret_key) -StoreAs default
 
             #Set to powershell 7
