@@ -120,7 +120,7 @@ stages:
 
             Write-Host "Installing AWS Tools Installer"
             $ProgressPreference = "SilentlyContinue"
-            Install-Module -name Aws.Tools.Installer -AllowClobber
+            Install-Module -name Aws.Tools.Installer -AllowClobber -confim:$true
 
             Set-AwsCredential -AccessKey $(access_key) -SecretKey $(secret_key)
 
