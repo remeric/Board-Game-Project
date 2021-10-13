@@ -79,15 +79,17 @@ stages:
         inputs:
           targetType: 'inline'
           script: |
-            # Make the aws credentials directory
+            # Make the aws credentials directory and copying file
+            Write-Host "-------Creating folder"
             New-Item -ItemType Directory -Path $ENV:USERPROFILE/.aws/credentials
-            Write-Host "Checking for credentials folder creation"
-            Dir $ENV:USERPROFILE/.aws
-      - task: CopyFiles@2
-        inputs:
-          SourceFolder: '$(Agent.TempDirectory)'
-          Contents: 'default-ec2.pem'
-          TargetFolder: '$ENV:USERPROFILE\.aws\credentials'
+            Dir $ENV:USERPROFILE\.aws
+            Copy-Item $(Agent.TempDirectory)\default-ec2.pem $ENV:USERPROFILE/.aws/credentials
+
+      # - task: CopyFiles@2
+      #   inputs:
+      #     SourceFolder: '$(Agent.TempDirectory)'
+      #     Contents: 'default-ec2.pem'
+      #     TargetFolder: '$ENV:USERPROFILE\.aws\credentials'
       - task: PowerShell@2
         inputs:
           targetType: 'inline'
