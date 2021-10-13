@@ -107,6 +107,9 @@ stages:
                 }
             }
             
+            $clusterarn
+            $servicearn
+
             #update service that is running task
             aws ecs update-service --cluster $clusterarn --service $servicearn --force-new-deployment
 
