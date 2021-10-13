@@ -80,7 +80,9 @@ stages:
           targetType: 'inline'
           script: |
             # Make the aws credentials directory
-            New-Item -ItemType Directory -Path $ENV:USERPROFILE/.aws/credentials/
+            New-Item -ItemType Directory -Path $ENV:USERPROFILE/.aws/credentials
+            Write-Host "Checking for credentials folder creation"
+            Dir $ENV:USERPROFILE/.aws/credentials
       - task: CopyFiles@2
         inputs:
           SourceFolder: '$(Agent.TempDirectory)'
