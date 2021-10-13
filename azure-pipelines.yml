@@ -120,6 +120,9 @@ stages:
             SETX AWS_DEFAULT_REGION us-east-1
             #Set-AWSCredential -AccessKey $(access_key) -SecretKey $(secret_key) -StoreAs default
 
+            Write-Host "Check AWS credentials configuration"
+            aws configure
+
             # Query for name of cluster and service (assuming you left cluster and service names the same from the terraform script)
             
             Write-Host "------- Getting Cluster"
