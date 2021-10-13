@@ -8,10 +8,9 @@ resources:
 
 variables:
   tag: '$(Build.BuildId)'
-  TEST_TEST: 'test'
-  TF_VAR_AWS_ACCESS_KEY_ID: $(client_id)
-  TF_VAR_AWS_SECRET_ACCESS_KEY: $(client_secret)
-  TF_VAR_AWS_DEFAULT_REGION: 'us-east-1'
+  VAR_AWS_ACCESS_KEY_ID: $(client_id)
+  VAR_AWS_SECRET_ACCESS_KEY: $(client_secret)
+  VAR_AWS_DEFAULT_REGION: 'us-east-1'
 
 stages:
 # - stage: Build
