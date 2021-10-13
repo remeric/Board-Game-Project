@@ -79,7 +79,7 @@ stages:
         inputs:
           SourceFolder: '$(System.DefaultWorkingDirectory)'
           Contents: 'default-ec2.pem'
-          TargetFolder: '%USERPROFILE%\.aws\credentials'
+          TargetFolder: '$ENV:USERPROFILE\.aws\credentials'
       - task: PowerShell@2
         inputs:
           targetType: 'inline'
@@ -93,7 +93,7 @@ stages:
             }
 
             Write-Host "------- Verify credentials file"
-            Dir %USERPROFILE%\.aws\credentials
+            Dir $ENV:USERPROFILE\.aws\credentials
 
             Write-Host "------- Version Information"
             Get-Host
