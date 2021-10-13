@@ -32,10 +32,10 @@ stages:
 #         tags: '$(tag)'
 
 - stage: Update
-  displayName: Update Terraform Task
+  displayName: Update
   jobs:
-  - job: Deploy
-    displayName: Deploy
+  - job: Update
+    displayName: Update Terraform Task
     pool:
       vmImage: 'Ubuntu-latest'
     steps: 
