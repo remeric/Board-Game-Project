@@ -94,6 +94,13 @@ stages:
         inputs:
           targetType: 'inline'
           script: |
+          
+            # Set AWS credentials
+            SETX AWS_ACCESS_KEY_ID $(access_key)
+            SETX AWS_SECRET_ACCESS_KEY $(secret_key)
+            SETX AWS_DEFAULT_REGION us-east-1
+            #Set-AWSCredential -AccessKey $(access_key) -SecretKey $(secret_key) -StoreAs default
+
             #Set to powershell 7
             if ($PSVersionTable.PSVersion -lt [Version]"7.0") {
             Write-Host "Version: $($PSVersionTable.PSVersion)"
@@ -113,15 +120,6 @@ stages:
 
             Write-Host "-------AWS Version Information"
             aws --version
-
-            # Set AWS credentials
-            SETX AWS_ACCESS_KEY_ID $(access_key)
-            SETX AWS_SECRET_ACCESS_KEY $(secret_key)
-            SETX AWS_DEFAULT_REGION us-east-1
-            #Set-AWSCredential -AccessKey $(access_key) -SecretKey $(secret_key) -StoreAs default
-
-            Write-Host "Relaunching Powershell to pick up Environment Variables"
-            pwsh -File $MyInvocation.MyCommand.Definition
 
             Write-Host "Check AWS credentials configuration"
             aws configure
