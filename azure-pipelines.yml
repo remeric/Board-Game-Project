@@ -90,7 +90,9 @@ stages:
             add-content $ENV:USERPROFILE/.aws/credentials/credential "aws_secret_access_key = $(client_secret)"
             add-content $ENV:USERPROFILE/.aws/credentials/config "region = us-east-1"
             
-
+            Write-Host "Get credential then config configs"
+            get-content $ENV:USERPROFILE/.aws/credentials/credential
+            get-content $ENV:USERPROFILE/.aws/credentials/config
 
       # - task: CopyFiles@2
       #   inputs:
