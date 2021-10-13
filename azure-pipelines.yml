@@ -87,8 +87,8 @@ stages:
             Write-Host "------- Version Information"
             Get-Host
 
-            Install AWS Tools
-            start-Process "msiexec.exe" -argumentlist "/i https://awscli.amazonaws.com/AWSCLIV2.msi /qn" -Wait
+            #Install AWS Tools
+            #start-Process "msiexec.exe" -argumentlist "/i https://awscli.amazonaws.com/AWSCLIV2.msi /qn" -Wait
 
             Write-Host "-------AWS Version Information"
             aws --version
