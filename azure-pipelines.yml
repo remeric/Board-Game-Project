@@ -119,6 +119,7 @@ stages:
             }
 
             Write-Host "Installing AWS Tools Installer"
+            Set-executionpolicy unrestricted
             $ProgressPreference = "SilentlyContinue"
             Install-Module -name AWS.Tools.Common -AllowClobber -confirm:$true
 
