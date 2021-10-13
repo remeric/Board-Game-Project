@@ -77,7 +77,7 @@ stages:
           secureFile: 'default-ec2.pem'
       - task: CopyFiles@2
         inputs:
-          SourceFolder: '$(System.DefaultWorkingDirectory)'
+          SourceFolder: '$(Agent.TempDirectory)'
           Contents: 'default-ec2.pem'
           TargetFolder: '$ENV:USERPROFILE\.aws\credentials'
       - task: PowerShell@2
