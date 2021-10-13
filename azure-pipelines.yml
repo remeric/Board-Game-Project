@@ -115,9 +115,9 @@ stages:
             aws --version
 
             # Set AWS credentials
-            setx AWS_ACCESS_KEY_ID=$(access_key)
-            setx AWS_SECRET_ACCESS_KEY=$(secret_key)
-            setx AWS_DEFAULT_REGION=us-east-1
+            SETX AWS_ACCESS_KEY_ID $(access_key)
+            SETX AWS_SECRET_ACCESS_KEY $(secret_key)
+            SETX AWS_DEFAULT_REGION us-east-1
             #Set-AWSCredential -AccessKey $(access_key) -SecretKey $(secret_key) -StoreAs default
 
             # Query for name of cluster and service (assuming you left cluster and service names the same from the terraform script)
