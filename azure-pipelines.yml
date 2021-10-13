@@ -120,6 +120,9 @@ stages:
             SETX AWS_DEFAULT_REGION us-east-1
             #Set-AWSCredential -AccessKey $(access_key) -SecretKey $(secret_key) -StoreAs default
 
+            Write-Host "Relaunching Powershell to pick up Environment Variables"
+            pwsh -File $MyInvocation.MyCommand.Definition
+
             Write-Host "Check AWS credentials configuration"
             aws configure
 
