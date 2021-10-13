@@ -75,24 +75,24 @@ stages:
       - task: DownloadSecureFile@1
         inputs:
           secureFile: 'default-ec2.pem'
-      - task: PowerShell@2
-        inputs:
-          targetType: 'inline'
-          script: |
-            # Make the aws credentials directory, copy file, create config file
-            Write-Host "-------Creating folder and copying over credentials"
-            New-Item -ItemType Directory -Path $ENV:USERPROFILE/.aws/credentials
-            Dir $ENV:USERPROFILE\.aws
-            Copy-Item $(Agent.TempDirectory)\default-ec2.pem $ENV:USERPROFILE/.aws/credentials
-            New-Item -ItemType file $ENV:USERPROFILE/.aws/credentials/config
-            New-Item -ItemType file $ENV:USERPROFILE/.aws/credentials/credentials
-            add-content $ENV:USERPROFILE/.aws/credentials/credential "aws_access_key_id = $(client_id)"
-            add-content $ENV:USERPROFILE/.aws/credentials/credential "aws_secret_access_key = $(client_secret)"
-            add-content $ENV:USERPROFILE/.aws/credentials/config "region = us-east-1"
+      # - task: PowerShell@2
+      #   inputs:
+      #     targetType: 'inline'
+      #     script: |
+      #       # Make the aws credentials directory, copy file, create config file
+      #       Write-Host "-------Creating folder and copying over credentials"
+      #       New-Item -ItemType Directory -Path $ENV:USERPROFILE/.aws/credentials
+      #       Dir $ENV:USERPROFILE\.aws
+      #       Copy-Item $(Agent.TempDirectory)\default-ec2.pem $ENV:USERPROFILE/.aws/credentials
+      #       New-Item -ItemType file $ENV:USERPROFILE/.aws/credentials/config
+      #       New-Item -ItemType file $ENV:USERPROFILE/.aws/credentials/credentials
+      #       add-content $ENV:USERPROFILE/.aws/credentials/credential "aws_access_key_id = $(client_id)"
+      #       add-content $ENV:USERPROFILE/.aws/credentials/credential "aws_secret_access_key = $(client_secret)"
+      #       add-content $ENV:USERPROFILE/.aws/credentials/config "region = us-east-1"
             
-            Write-Host "Get credential then config configs"
-            get-content $ENV:USERPROFILE/.aws/credentials/credential
-            get-content $ENV:USERPROFILE/.aws/credentials/config
+      #       Write-Host "Get credential then config configs"
+      #       get-content $ENV:USERPROFILE/.aws/credentials/credential
+      #       get-content $ENV:USERPROFILE/.aws/credentials/config
 
       # - task: CopyFiles@2
       #   inputs:
@@ -117,6 +117,9 @@ stages:
             pwsh -File $MyInvocation.MyCommand.Definition
             exit
             }
+
+            Write-Host "------- Show Environment Variables"
+            dir env:
 
             Write-Host "------- Verify credentials file"
             Dir $ENV:USERPROFILE\.aws\credentials
