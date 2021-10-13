@@ -87,8 +87,8 @@ stages:
             Write-Host "------- Version Information"
             Get-Host
 
-            #Install AWS Tools
-            #start-Process "msiexec.exe" -argumentlist "/i https://awscli.amazonaws.com/AWSCLIV2.msi /qn" -Wait
+            Install AWS Tools
+            start-Process "msiexec.exe" -argumentlist "/i https://awscli.amazonaws.com/AWSCLIV2.msi /qn" -Wait
 
             Write-Host "-------AWS Version Information"
             aws --version
@@ -99,7 +99,7 @@ stages:
             # Query for name of cluster and service (assuming you left cluster and service names the same from the terraform script)
             
             Write-Host "------- Getting Cluster"
-            $clusterlist = aws ecs list-clusters --query 'clusterArns'
+            $clusterlist = aws ecs list-clusters --query 'clusterArns' --region us-east-1
             $clusters = $clusterlist | ConvertFrom-Json
 
             Write-Host "Cluster list variable $clusterlist"
