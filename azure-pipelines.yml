@@ -70,7 +70,7 @@ stages:
   - job: Deploy
     displayName: Deploy
     pool:
-      vmImage: 'windows-2019'
+      vmImage: 'windows-2022'
     steps:
       - task: PowerShell@2
         inputs:
