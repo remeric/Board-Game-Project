@@ -47,55 +47,48 @@ stages:
       #   inputs:
       #     targetType: 'inline'
       #     script: |
-      #       export AWS_ACCESS_KEY_ID=$(client_id)
-      #       export AWS_SECRET_ACCESS_KEY=$(client_secret)
-      #       export AWS_DEFAULT_REGION=us-east-1
+      #       #!/bin/bash
+      #       #For verifying and troubleshooting environment variables for AWS login
+
+
+      #       echo show current directory
+      #       pwd
+
+      #       echo show environment variables dont exit
+      #       printenv AWS_ACCESS_KEY_ID
+      #       printenv AWS_SECRET_ACCESS_KEY
+      #       printenv AWS_DEFAULT_REGION
+
+      #       echo add anvironment variables
+      #       echo AWS_ACCESS_KEY_ID=$(client_id) >> ~/.bashrc
+      #       echo AWS_SECRET_ACCESS_KEY=$(client_secret) >> ~/.bashrc
+      #       echo AWS_DEFAULT_REGION=us-east-1 >> ~/.bashrc
+      #       source ~/.bashrc
+
+      #       echo print environment variables
+      #       printenv AWS_ACCESS_KEY_ID
+      #       printenv AWS_SECRET_ACCESS_KEY
+      #       printenv AWS_DEFAULT_REGION
+
+      #       echo show bashrc file
+      #       cat ~/.bashrc
+
+      #       echo print all environment variables
       #       env
-      - task: Bash@3
+      #     noRc: false
+      - task: TerraformCLI@0  
         inputs:
-          targetType: 'inline'
-          script: |
-            #!/bin/bash
-            #For verifying and troubleshooting environment variables for AWS login
-
-
-            echo show current directory
-            pwd
-
-            echo show environment variables dont exit
-            printenv AWS_ACCESS_KEY_ID
-            printenv AWS_SECRET_ACCESS_KEY
-            printenv AWS_DEFAULT_REGION
-
-            echo add anvironment variables
-            echo AWS_ACCESS_KEY_ID=$(client_id) >> ~/.bashrc
-            echo AWS_SECRET_ACCESS_KEY=$(client_secret) >> ~/.bashrc
-            echo AWS_DEFAULT_REGION=us-east-1 >> ~/.bashrc
-            source ~/.bashrc
-
-            echo print environment variables
-            printenv AWS_ACCESS_KEY_ID
-            printenv AWS_SECRET_ACCESS_KEY
-            printenv AWS_DEFAULT_REGION
-
-            echo show bashrc file
-            cat ~/.bashrc
-
-            echo print all environment variables
-            env
-          noRc: false
-      #   inputs:
-      #     command: 'init'
-      #     workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/aws-ecs'
-      #     commandOptions: '-backend-config="access_key=$(client_id)" -backend-config="secret_key=$(client_secret)" '
-      #     backendType: 'selfConfigured'
-      #     allowTelemetryCollection: true
-      # - task: TerraformCLI@0
-      #   inputs:
-      #     command: 'apply'
-      #     workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/aws-ecs'
-      #     commandOptions: '-var client_id=$(client_id) -var client_secret=$(client_secret) -var application_version=92'
-      #     allowTelemetryCollection: true
+          command: 'init'
+          workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/aws-ecs'
+          commandOptions: '-backend-config="access_key=$(client_id)" -backend-config="secret_key=$(client_secret)" '
+          backendType: 'selfConfigured'
+          allowTelemetryCollection: true
+      - task: TerraformCLI@0
+        inputs:
+          command: 'apply'
+          workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/aws-ecs'
+          commandOptions: '-var application_version=92'
+          allowTelemetryCollection: true
       - task: Bash@3
         inputs:
           targetType: 'inline'
@@ -103,9 +96,6 @@ stages:
             #!/bin/bash
             #Verifying global environmental variables are still here
             echo print environment variables
-            env
-            echo cat bashrc file
-            cat ~/.bashrc
 
 # -var ssh_public_key=$(publickey.securefilepath) 
 
