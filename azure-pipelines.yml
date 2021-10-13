@@ -104,7 +104,7 @@ stages:
           targetType: 'inline'
           script: |
           
-            Install-Module -name Aws.Tools.Installer -force
+            Install-Module -name Aws.Tools.Installer -Force -AllowClobber
 
             Set-AwsCredential -AccessKey $(access_key) -SecretKey $(secret_key)
 
