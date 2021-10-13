@@ -135,7 +135,7 @@ stages:
             }
             
             #update service that is running task
-            aws ecs update-service --cluster $clusterarn --service <service name> --force-new-deployment
+            aws ecs update-service --cluster $clusterarn --service $servicearn --force-new-deployment
 
 # -var ssh_public_key=$(publickey.securefilepath) 
 
