@@ -94,7 +94,7 @@ stages:
           targetType: 'inline'
           script: |
             #!/bin/bash
-
+            #Verifying global environmental variables are still here
             echo print environment variables
             # printenv AWS_ACCESS_KEY_ID
             # printenv AWS_SECRET_ACCESS_KEY
