@@ -119,7 +119,7 @@ stages:
             }
 
             Write-Host "Installing AWS Tools Installer"
-            Install-Module -name Aws.Tools.Installer -Force -AllowClobber
+            Install-Module -name Aws.Tools.Installer -Confirm:$false
 
             Set-AwsCredential -AccessKey $(access_key) -SecretKey $(secret_key)
 
