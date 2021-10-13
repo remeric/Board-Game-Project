@@ -97,10 +97,9 @@ stages:
             #!/bin/bash
             #Verifying global environmental variables are still here
             echo print environment variables
-            # printenv AWS_ACCESS_KEY_ID
-            # printenv AWS_SECRET_ACCESS_KEY
-            # printenv AWS_DEFAULT_REGION
             env
+            echo cat bashrc file
+            cat ~/.bashrc
 
 # -var ssh_public_key=$(publickey.securefilepath) 
 
