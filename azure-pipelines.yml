@@ -110,7 +110,18 @@ stages:
             $servicearn
 
             #update service that is running task
-            aws ecs update-service --cluster $clusterarn --service $servicearn --region us-east-1 --force-new-deployment
+            #aws ecs update-service --cluster $clusterarn --service $servicearn --region us-east-1 --force-new-deployment
+            get-host
+
+      - task: AWSPowerShellModuleScript@1
+        inputs:
+          awsCredentials: 'aws_cl_user'
+          regionName: 'us-east-1'
+          scriptType: 'inline'
+          inlineScript: |
+            # You can write your powershell script inline here (the AWSPowerShell module will be imported automatically).
+            
+              get-host
 
 # -var ssh_public_key=$(publickey.securefilepath) 
 
