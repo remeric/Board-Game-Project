@@ -65,6 +65,7 @@ stages:
             echo AWS_ACCESS_KEY_ID=$(client_id) >> ~/.bashrc
             echo AWS_SECRET_ACCESS_KEY=$(client_secret) >> ~/.bashrc
             echo AWS_DEFAULT_REGION=us-east-1 >> ~/.bashrc
+            source ~/.bashrc
 
             echo print environment variables
             printenv AWS_ACCESS_KEY_ID
