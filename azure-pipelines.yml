@@ -72,56 +72,58 @@ stages:
     pool:
       vmImage: 'windows-2022'
     steps:
-      # - task: PowerShell@2
-      #   inputs:
-      #     targetType: 'inline'
-      #     script: |
-#             #Install AWS Tools
-#             #start-Process "msiexec.exe" -argumentlist "/i https://awscli.amazonaws.com/AWSCLIV2.msi /qn" -Wait
-
-#             aws --version
-
-#             # Set AWS credentials
-#             #Set-AWSCredential -AccessKey $(access_key) -SecretKey $(secret_key) -StoreAs default
-
-#             # Query for name of cluster and service (assuming you left cluster and service names the same from the terraform script)
-            
-#             $clusterlist = aws ecs list-clusters --query 'clusterArns'
-#             $clusters = $clusterlist | ConvertFrom-Json
-            
-#             foreach ($cluster in $clusters) {
-#                 If ($cluster -like "*BGapp_ECS_cluster*") {
-#                     $clusterarn = $cluster
-#                     echo $clusterarn
-#                 }
-#             }
-            
-#             $servicelist = aws ecs list-services --cluster $clusterarn --query 'serviceArns'
-#             $services = $servicelist | ConvertFrom-Json
-            
-#             foreach ($service in $services) {
-#                 If ($service -like "*BGapp_ECS_service*") {
-#                     $servicearn = $service
-#                     echo $servicearn
-#                 }
-#             }
-            
-#             $clusterarn
-#             $servicearn
-
-#             #update service that is running task
-#             aws ecs update-service --cluster $clusterarn --service $servicearn --region us-east-1 --force-new-deployment
-
-      - task: AWSPowerShellModuleScript@1
+      - task: PowerShell@2
         inputs:
-          awsCredentials: 'aws_cl_user'
-          regionName: 'us-east-1'
-          scriptType: 'inline'
-          inlineScript: |
-            # You can write your powershell script inline here (the AWSPowerShell module will be imported automatically).
-            
-              get-host
+          targetType: 'inline'
+          script: |
+            #Set to powershell 7
+            if ($PSVersionTable.PSVersion -lt [Version]"7.0") {
+            Write-Host "Version: $($PSVersionTable.PSVersion)"
+            Write-Host "Re-launching as pwsh"
+            pwsh -File $MyInvocation.MyCommand.Definition
+            exit
+            }
 
+            #Doublecheck Version
+            Get-Host
+
+            #Install AWS Tools
+            #start-Process "msiexec.exe" -argumentlist "/i https://awscli.amazonaws.com/AWSCLIV2.msi /qn" -Wait
+
+            #Check aws --version
+            aws --version
+
+            # Set AWS credentials
+            #Set-AWSCredential -AccessKey $(access_key) -SecretKey $(secret_key) -StoreAs default
+
+            # Query for name of cluster and service (assuming you left cluster and service names the same from the terraform script)
+            
+            $clusterlist = aws ecs list-clusters --query 'clusterArns'
+            $clusters = $clusterlist | ConvertFrom-Json
+            
+            foreach ($cluster in $clusters) {
+                If ($cluster -like "*BGapp_ECS_cluster*") {
+                    $clusterarn = $cluster
+                    echo $clusterarn
+                }
+            }
+            
+            $servicelist = aws ecs list-services --cluster $clusterarn --query 'serviceArns'
+            $services = $servicelist | ConvertFrom-Json
+            
+            foreach ($service in $services) {
+                If ($service -like "*BGapp_ECS_service*") {
+                    $servicearn = $service
+                    echo $servicearn
+                }
+            }
+            
+            #Output Vairables
+            $clusterarn
+            $servicearn
+
+            #update service that is running task
+            #aws ecs update-service --cluster $clusterarn --service $servicearn --region us-east-1 --force-new-deployment
 
 # -var ssh_public_key=$(publickey.securefilepath) 
 
