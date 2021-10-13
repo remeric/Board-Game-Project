@@ -50,22 +50,30 @@ stages:
           targetType: 'inline'
           script: |
             #!/bin/bash
+            #For verifying and troubleshooting environment variables for AWS login
+
+
             echo show current directory
             pwd
+
             echo show environment variables dont exit
             printenv AWS_ACCESS_KEY_ID
             printenv AWS_SECRET_ACCESS_KEY
             printenv AWS_DEFAULT_REGION
+
             echo add anvironment variables
-            vi ~/.bashrc
-            export AWS_ACCESS_KEY_ID=$(client_id)
-            export AWS_SECRET_ACCESS_KEY=$(client_secret)
-            export AWS_DEFAULT_REGION=us-east-1
-            source ~/.bashrc
+            echo AWS_ACCESS_KEY_ID=$(client_id) >> ~/.bashrc
+            echo AWS_SECRET_ACCESS_KEY=$(client_secret) >> ~/.bashrc
+            echo AWS_DEFAULT_REGION=us-east-1 >> ~/.bashrc
+
             echo print environment variables
             printenv AWS_ACCESS_KEY_ID
             printenv AWS_SECRET_ACCESS_KEY
             printenv AWS_DEFAULT_REGION
+
+            echo show bashrc file
+            cat ~/.bashrc
+
             echo print all environment variables
             env
           noRc: false
