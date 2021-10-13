@@ -79,11 +79,18 @@ stages:
         inputs:
           targetType: 'inline'
           script: |
-            # Make the aws credentials directory and copying file
-            Write-Host "-------Creating folder"
+            # Make the aws credentials directory, copy file, create config file
+            Write-Host "-------Creating folder and copying over credentials"
             New-Item -ItemType Directory -Path $ENV:USERPROFILE/.aws/credentials
             Dir $ENV:USERPROFILE\.aws
             Copy-Item $(Agent.TempDirectory)\default-ec2.pem $ENV:USERPROFILE/.aws/credentials
+            New-Item -ItemType file $ENV:USERPROFILE/.aws/credentials/config
+            New-Item -ItemType file $ENV:USERPROFILE/.aws/credentials/credentials
+            add-content $ENV:USERPROFILE/.aws/credentials/credential "aws_access_key_id = $(client_id)"
+            add-content $ENV:USERPROFILE/.aws/credentials/credential "aws_secret_access_key = $(client_secret)"
+            add-content $ENV:USERPROFILE/.aws/credentials/config "region = us-east-1"
+            
+
 
       # - task: CopyFiles@2
       #   inputs:
