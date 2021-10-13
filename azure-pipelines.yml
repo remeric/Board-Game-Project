@@ -106,6 +106,8 @@ stages:
           
             Install-Module -name Aws.Tools.Installer -force
 
+            Set-AwsCredential -AccessKey $(access_key) -SecretKey $(secret_key)
+
             # Set AWS credentials
             # SETX AWS_ACCESS_KEY_ID $(access_key)
             # SETX AWS_SECRET_ACCESS_KEY $(secret_key)
@@ -159,7 +161,7 @@ stages:
 
 
             Write-Host "-------Getting Service ARN"
-            $servicelist = aws ecs list-services --cluster $clusterarn --query 'serviceArns'
+            $servicelist = aws ecs list-services --cluster $clusterarn --query 'serviceArns'  --region us-east-1
             $services = $servicelist | ConvertFrom-Json
             
             foreach ($service in $services) {
