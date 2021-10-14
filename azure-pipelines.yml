@@ -135,16 +135,13 @@ stages:
             Get-InstalledModule
 
             Write-Host "------- Set AWS Credentials"
-            Set-AwsCredential -AccessKey $(access_key) -SecretKey $(secret_key)
+            Set-AwsCredential -AccessKey '$(access_key)' -SecretKey '$(secret_key)'
 
             # Write-Host "------- Verify credentials file"
             # Dir $ENV:USERPROFILE\.aws\credentials
 
             Write-Host "------- PS Version Information"
             Get-Host
-
-            #Install AWS Tools
-            #start-Process "msiexec.exe" -argumentlist "/i https://awscli.amazonaws.com/AWSCLIV2.msi /qn" -Wait
 
             Write-Host "-------AWS Version Information"
             aws --version
