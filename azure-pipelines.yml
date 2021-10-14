@@ -126,10 +126,11 @@ stages:
             Get-InstalledModule
 
             Write-Host "------- Set AWS Credentials"
-            Set-AWSCredential -AccessKey $(access_key) -SecretKey $(secret_key) -StoreAs MyProfile
-            Set-AWSCredential -ProfileName MyProfile
-            Initialize-AWSDefaultConfiguration -ProfileName MyProfile -Region us-east-1
-            Aws configure --profile MyProfile
+            #Set-AWSCredential -AccessKey $(access_key) -SecretKey $(secret_key) -StoreAs MyProfile
+            #Set-AWSCredential -ProfileName MyProfile
+            #Initialize-AWSDefaultConfiguration -ProfileName MyProfile -Region us-east-1
+            #Aws configure --profile MyProfile
+            Initialize-AWSDefaultConfiguration -AccessKey $(access_key) -SecretKey $(secret_key)
 
             Write-Host "------- PS Version Information"
             Get-Host
