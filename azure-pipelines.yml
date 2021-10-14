@@ -148,8 +148,8 @@ stages:
             Write-Host "-------AWS Version Information"
             aws --version
 
-            Write-Host "Check AWS credentials configuration"
-            aws configure
+            # Write-Host "Check AWS credentials configuration"
+            # aws configure
 
             # Query for name of cluster and service (assuming you left cluster and service names the same from the terraform script)
             
