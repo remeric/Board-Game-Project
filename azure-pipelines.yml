@@ -118,15 +118,31 @@ stages:
             exit
             }
 
-            Write-Host "Installing AWS Tools Installer"
+            Write-Host "-------Installing AWS Tools Common module"
             Set-executionpolicy unrestricted
             $ProgressPreference = "SilentlyContinue"
             Install-Module -name AWS.Tools.Common -AllowClobber -Force -SkipPublisherCheck
 
-            Write-Host "Check Installed Modules"
+            Write-Host "-------Check Installed Modules"
             Get-InstalledModule
 
-            Set-AwsCredential -AccessKey $(access_key) -SecretKey $(secret_key)
+
+            Write-Host: "------- Set AWS Credentials"
+            Try {
+              Set-AwsCredential -AccessKey $(access_key) -SecretKey $(secret_key)
+                if ($result -ne $null)
+                {
+                Write-Host "Success" -ForegroundColor Cyan
+                }
+                else
+                {
+                Write-Host "Failed" -ForegroundColor Red
+                }
+              }
+            catch
+              {
+                Write-Host "Termination error" -ForegroundColor Red
+              }
 
             Write-Host "------- Show Environment Variables"
             dir env:
