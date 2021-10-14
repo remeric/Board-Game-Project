@@ -1,11 +1,7 @@
             #set Parameters (must use script with params for secrets in AzureDevops, can't do inline)
-            Param(
-                [Parameter(Position=1)]
-                [string]$accessparam,
-                                
-                [Parameter(Position=2)]
-                [string]$secretparam
-            )
+            $accessparam = $args[0]
+            $secretparam = $args[1]
+            
 
             # #Set to powershell 7 (Azure Devops currently launches V5)
             # if ($PSVersionTable.PSVersion -lt [Version]"7.0") {
