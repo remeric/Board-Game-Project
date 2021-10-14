@@ -131,18 +131,18 @@ stages:
             Write-Host "-------Check Installed Modules"
             Get-InstalledModule
 
-            $env:PSModulePath
+            # $env:PSModulePath
 
             # Write-Host: "------- Set AWS Credentials"
             Set-AwsCredential -AccessKey $(access_key) -SecretKey $(secret_key)
 
-            $env:PSModulePath
+            # $env:PSModulePath
 
             # Write-Host "------- Show Environment Variables"
             dir env:
 
-            Write-Host "------- Verify credentials file"
-            Dir $ENV:USERPROFILE\.aws\credentials
+            # Write-Host "------- Verify credentials file"
+            # Dir $ENV:USERPROFILE\.aws\credentials
 
             Write-Host "------- Version Information"
             Get-Host
