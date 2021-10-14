@@ -118,7 +118,7 @@ stages:
             exit
             }
 
-            Install-Package Microsoft.PowerShell.Commands.Utility
+            # Install-Package Microsoft.PowerShell.Commands.Utility
 
             Get-Module
 
@@ -133,63 +133,63 @@ stages:
 
             $env:PSModulePath
 
-            Write-Host: "------- Set AWS Credentials"
+            # Write-Host: "------- Set AWS Credentials"
             Set-AwsCredential -AccessKey $(access_key) -SecretKey $(secret_key)
 
-            # $env:PSModulePath
+            $env:PSModulePath
 
             # Write-Host "------- Show Environment Variables"
-            # dir env:
+            dir env:
 
-            # Write-Host "------- Verify credentials file"
-            # Dir $ENV:USERPROFILE\.aws\credentials
+            Write-Host "------- Verify credentials file"
+            Dir $ENV:USERPROFILE\.aws\credentials
 
-            # Write-Host "------- Version Information"
-            # Get-Host
+            Write-Host "------- Version Information"
+            Get-Host
 
-            # #Install AWS Tools
-            # #start-Process "msiexec.exe" -argumentlist "/i https://awscli.amazonaws.com/AWSCLIV2.msi /qn" -Wait
+            #Install AWS Tools
+            #start-Process "msiexec.exe" -argumentlist "/i https://awscli.amazonaws.com/AWSCLIV2.msi /qn" -Wait
 
-            # Write-Host "-------AWS Version Information"
-            # aws --version
+            Write-Host "-------AWS Version Information"
+            aws --version
 
-            # Write-Host "Check AWS credentials configuration"
-            # aws configure
+            Write-Host "Check AWS credentials configuration"
+            aws configure
 
-            # # Query for name of cluster and service (assuming you left cluster and service names the same from the terraform script)
+            # Query for name of cluster and service (assuming you left cluster and service names the same from the terraform script)
             
-            # Write-Host "------- Getting Cluster"
-            # $clusterlist = aws ecs list-clusters --query 'clusterArns' --region us-east-1
-            # $clusters = $clusterlist | ConvertFrom-Json
+            Write-Host "------- Getting Cluster"
+            $clusterlist = aws ecs list-clusters --query 'clusterArns' --region us-east-1
+            $clusters = $clusterlist | ConvertFrom-Json
 
-            # Write-Host "Cluster list variable $clusterlist"
-            # Write-Host "Clusters variable $clusters"
-            # Write-Host "PS Version"
-            # Get-Host
+            Write-Host "Cluster list variable $clusterlist"
+            Write-Host "Clusters variable $clusters"
+            Write-Host "PS Version"
+            Get-Host
             
-            # foreach ($cluster in $clusters) {
-            #     If ($cluster -like "*BGapp_ECS_cluster*") {
-            #         $clusterarn = $cluster
-            #         echo $clusterarn
-            #     }
-            # }
-            # Write-Host "-------Cluster ARN $clusterarn"
+            foreach ($cluster in $clusters) {
+                If ($cluster -like "*BGapp_ECS_cluster*") {
+                    $clusterarn = $cluster
+                    echo $clusterarn
+                }
+            }
+            Write-Host "-------Cluster ARN $clusterarn"
 
 
-            # Write-Host "-------Getting Service ARN"
-            # $servicelist = aws ecs list-services --cluster $clusterarn --query 'serviceArns'  --region us-east-1
-            # $services = $servicelist | ConvertFrom-Json
+            Write-Host "-------Getting Service ARN"
+            $servicelist = aws ecs list-services --cluster $clusterarn --query 'serviceArns'  --region us-east-1
+            $services = $servicelist | ConvertFrom-Json
             
-            # foreach ($service in $services) {
-            #     If ($service -like "*BGapp_ECS_service*") {
-            #         $servicearn = $service
-            #         echo $servicearn
-            #     }
-            # }
-            # Write-Host "-------Service ARN $servicearn"
+            foreach ($service in $services) {
+                If ($service -like "*BGapp_ECS_service*") {
+                    $servicearn = $service
+                    echo $servicearn
+                }
+            }
+            Write-Host "-------Service ARN $servicearn"
             
-            # #update service that is running task
-            # #aws ecs update-service --cluster $clusterarn --service $servicearn --region us-east-1 --force-new-deployment
+            #update service that is running task
+            #aws ecs update-service --cluster $clusterarn --service $servicearn --region us-east-1 --force-new-deployment
 
 # -var ssh_public_key=$(publickey.securefilepath) 
 
