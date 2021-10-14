@@ -118,6 +118,9 @@ stages:
             exit
             }
 
+            Write-Host "------- Show Environment Variables"
+            dir env:
+
             # Install-Package Microsoft.PowerShell.Commands.Utility
 
             # Get-Module
@@ -133,9 +136,6 @@ stages:
 
             Write-Host "------- Set AWS Credentials"
             Set-AwsCredential -AccessKey $(access_key)-SecretKey $(secret_key)
-
-            Write-Host "------- Show Environment Variables"
-            dir env:
 
             # Write-Host "------- Verify credentials file"
             # Dir $ENV:USERPROFILE\.aws\credentials
