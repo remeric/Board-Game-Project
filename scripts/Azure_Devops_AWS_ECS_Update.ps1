@@ -1,6 +1,5 @@
             #set Parameters (must use script with params for secrets in AzureDevops, can't do inline)
-            #$accessparam = $args[0]
-            #$secretparam = $args[1]
+        function Update-AWSsettings {
 
             Param(
                 [Parameter(Position=1)]
@@ -10,13 +9,13 @@
                 [string]$secretparam
             )
 
-            #Set to powershell 7 (Azure Devops currently launches V5)
-            if ($PSVersionTable.PSVersion -lt [Version]"7.0") {
-                Write-Host "Version: $($PSVersionTable.PSVersion)"
-                Write-Host "Re-launching as pwsh"
-                pwsh -File $MyInvocation.MyCommand.Definition
-                exit
-            }   
+            # #Set to powershell 7 (Azure Devops currently launches V5)
+            # if ($PSVersionTable.PSVersion -lt [Version]"7.0") {
+            #     Write-Host "Version: $($PSVersionTable.PSVersion)"
+            #     Write-Host "Re-launching as pwsh"
+            #     pwsh -File $MyInvocation.MyCommand.Definition
+            #     exit
+            # }   
 
             #Install AWS Tools module for Set-AWSCredentials command
             Write-Host "-------Installing AWS Tools Common module"
@@ -74,3 +73,5 @@
             
             #update service that is running task
             #aws ecs update-service --cluster $clusterarn --service $servicearn --region us-east-1 --force-new-deployment
+
+        }
