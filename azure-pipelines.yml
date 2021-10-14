@@ -118,8 +118,8 @@ stages:
             exit
             }
 
-            Write-Host "------- Show Environment Variables"
-            dir env:
+            # Write-Host "------- Show Environment Variables"
+            # dir env:
 
             # Install-Package Microsoft.PowerShell.Commands.Utility
 
