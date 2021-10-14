@@ -126,7 +126,8 @@ stages:
             Write-Host "-------Check Installed Modules"
             Get-InstalledModule
 
-            $secret = $(secret_key)
+            $secret = ConvertTo-SecureString "${env:MY_SECRET}" -AsPlainText -Force
+            
 
             Write-Host "------- Set AWS Credentials"
             #Set-AWSCredential -AccessKey $(access_key) -SecretKey $(secret_key) -StoreAs MyProfile
