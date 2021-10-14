@@ -1,5 +1,12 @@
             #set Parameters (must use script with params for secrets in AzureDevops, can't do inline)
-            
+            param($accesspar,$secretpar)
+
+            $accessparam = $accesspar
+            $secretparam = $secretpar
+
+            $accessparam
+            $secretparam
+
             #Set to powershell 7 (Azure Devops currently launches V5)
             if ($PSVersionTable.PSVersion -lt [Version]"7.0") {
                 Write-Host "Version: $($PSVersionTable.PSVersion)"
@@ -26,7 +33,8 @@
             aws --version
 
             Write-Host "------- Set AWS Credentials"
-            param($accessparam,$secretparam)
+            $accessparam
+            $secretparam
             Initialize-AWSDefaultConfiguration -AccessKey $accessparam -SecretKey $secretparam
 
             # Query for name of cluster and service (assuming you left cluster and service names the same from the original terraform script)
