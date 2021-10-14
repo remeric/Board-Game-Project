@@ -120,7 +120,7 @@ stages:
             Set-executionpolicy unrestricted
             $ProgressPreference = "SilentlyContinue"
             Set-PSRepository PSGallery -InstallationPolicy Trusted
-            install-module AWS.Tools -SkipPublisherCheck
+            install-module AWS.Tools.Common -SkipPublisherCheck
 
             Write-Host "-------Check Installed Modules"
             Get-InstalledModule
