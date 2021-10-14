@@ -10,10 +10,6 @@
                 [string]$secretparam
             )
 
-            $accessparam
-            $secretparam
-
-
             #Set to powershell 7 (Azure Devops currently launches V5)
             if ($PSVersionTable.PSVersion -lt [Version]"7.0") {
                 Write-Host "Version: $($PSVersionTable.PSVersion)"
