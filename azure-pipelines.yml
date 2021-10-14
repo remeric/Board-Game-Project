@@ -95,11 +95,5 @@ stages:
       #     TargetFolder: '$ENV:USERPROFILE\.aws\credentials'
       - task: PowerShell@2
         inputs:
-          targetType: 'inline'
-          script: |
-            $(System.DefaultWorkingDirectory)\scripts\Azure_Devops_AWS_ECS_Update.ps1
-
-      - task: PowerShell@2
-        inputs:
           filePath: '$(System.DefaultWorkingDirectory)\scripts\Azure_Devops_AWS_ECS_Update.ps1'
-          arguments: 'Update-AWSsetup $(access_key) $(my_secret_key)'
+          arguments: '$(access_key) $(my_secret_key)'
