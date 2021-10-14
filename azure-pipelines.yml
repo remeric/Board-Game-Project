@@ -12,7 +12,6 @@ variables:
   AWS_SECRET_ACCESS_KEY: $(client_secret)
   AWS_DEFAULT_REGION: 'us-east-1'
   MY_SECRET : $(secret_key)
-- group: my_secrets
 
 stages:
 # - stage: Build
