@@ -128,21 +128,7 @@ stages:
 
 
             Write-Host: "------- Set AWS Credentials"
-            Try {
-              Set-AwsCredential -AccessKey $(access_key) -SecretKey $(secret_key)
-                if ($result -ne $null)
-                {
-                Write-Host "Success" -ForegroundColor Cyan
-                }
-                else
-                {
-                Write-Host "Failed" -ForegroundColor Red
-                }
-              }
-            catch
-              {
-                Write-Host "Termination error" -ForegroundColor Red
-              }
+            Set-AwsCredential -AccessKey $(access_key) -SecretKey $(secret_key)
 
             Write-Host "------- Show Environment Variables"
             dir env:
