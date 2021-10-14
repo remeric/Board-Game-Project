@@ -1,6 +1,6 @@
             #set Parameters (must use script with params for secrets in AzureDevops, can't do inline)
-        function Update-AWSsetup {
-            param($accesspar,$secretpar)
+            $accessparam = $arg[0]
+            $secretparam = $arg[1]
 
             $accessparam
             $secretparam
@@ -69,4 +69,3 @@
             
             #update service that is running task
             #aws ecs update-service --cluster $clusterarn --service $servicearn --region us-east-1 --force-new-deployment
-        }
