@@ -29,8 +29,8 @@
             aws --version
 
             Write-Host "------- Set AWS Credentials"
-            Set-AWSCredential -AccessKey $accessparam -SecretKey $secretparam -StoreAs myprofile -Scope Global
-            Initialize-AWSDefaultConfiguration -ProfileName myprofile -Region us-east-1 -Scope Global
+            #Set-AWSCredential -AccessKey $accessparam -SecretKey $secretparam -StoreAs myprofile -Scope Global
+            Initialize-AWSDefaultConfiguration -AccessKey $accessparam -SecretKey $secretparam -Region us-east-1 -Scope Global
 
             # Query for name of cluster and service (assuming you left cluster and service names the same from the original terraform script)
             
