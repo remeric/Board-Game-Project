@@ -187,10 +187,6 @@ stages:
       #       #aws ecs update-service --cluster $clusterarn --service $servicearn --region us-east-1 --force-new-deployment
       - task: PowerShell@2
         inputs:
-          targetType: 'inline'
-          script: 'dir $(System.DefaultWorkingDirectory)'
-      - task: PowerShell@2
-        inputs:
           filePath: '$(System.DefaultWorkingDirectory)\scripts\Azure_Devops_AWS_ECS_Update.ps1'
           arguments: '$(access_key) $(my_secret_key)'
 
