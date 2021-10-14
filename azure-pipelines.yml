@@ -132,7 +132,7 @@ stages:
             Get-InstalledModule
 
             Write-Host "------- Set AWS Credentials"
-            Set-AwsCredential -AccessKey $(access_key) -SecretKey $(secret_key)
+            Set-AwsCredential -AccessKey $env:access_key: -SecretKey env:secret_key
 
             # Write-Host "------- Show Environment Variables"
             # dir env:
