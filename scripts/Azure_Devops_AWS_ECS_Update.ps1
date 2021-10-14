@@ -1,6 +1,18 @@
             #set Parameters (must use script with params for secrets in AzureDevops, can't do inline)
-            $accessparam = $args[0]
-            $secretparam = $args[1]
+            #$accessparam = $args[0]
+            #$secretparam = $args[1]
+
+            param(
+                [# access key
+                [Parameter(Position=1)]
+                [string]
+                $accessparam]
+                                
+                [# secret key
+                [Parameter(Position=1)]
+                [string]
+                $secretparam]
+            )
 
             $accessparam
             $secretparam
