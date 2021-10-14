@@ -112,8 +112,8 @@ stages:
             exit
             }
 
-            Write-Host "-------Install AWS Tools"
-            start-Process "msiexec.exe" -argumentlist "/i https://awscli.amazonaws.com/AWSCLIV2.msi /qn" -Wait
+            #Write-Host "-------Install AWS Tools"
+            #start-Process "msiexec.exe" -argumentlist "/i https://awscli.amazonaws.com/AWSCLIV2.msi /qn" -Wait
 
 
             Write-Host "-------Installing AWS Tools Common module"
@@ -126,10 +126,10 @@ stages:
             Get-InstalledModule
 
             Write-Host "------- Set AWS Credentials"
-            Set-AWSCredential -AccessKey $(access_key) -SecretKey $(secret_key) -StoreAs default
-            Set-AWSCredential -ProfileName default
-            #Initialize-AWSDefaultConfiguration -ProfileName myCredentials -Region us-east-1
-            Aws configure --profile default
+            Set-AWSCredential -AccessKey $(access_key) -SecretKey $(secret_key) -StoreAs MyProfile
+            Set-AWSCredential -ProfileName MyProfile
+            Initialize-AWSDefaultConfiguration -ProfileName MyProfile -Region us-east-1
+            Aws configure --profile MyProfile
 
             Write-Host "------- PS Version Information"
             Get-Host
