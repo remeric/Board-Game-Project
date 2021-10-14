@@ -2,16 +2,12 @@
             #$accessparam = $args[0]
             #$secretparam = $args[1]
 
-            param(
-                [# access key
+            Param(
                 [Parameter(Position=1)]
-                [string]
-                $accessparam]
+                [string]$accessparam,
                                 
-                [# secret key
-                [Parameter(Position=1)]
-                [string]
-                $secretparam]
+                [Parameter(Position=2)]
+                [string]$secretparam
             )
 
             $accessparam
