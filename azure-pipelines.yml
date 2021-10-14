@@ -129,14 +129,14 @@ stages:
             Get-InstalledModule
 
             #$secret = ConvertTo-SecureString "${env:MY_SECRET}" -AsPlainText -Force
-            $secret = $(access_key)
+            $secret = '$(secret_key)'
 
             Write-Host "------- Set AWS Credentials"
             #Set-AWSCredential -AccessKey $(access_key) -SecretKey $(secret_key) -StoreAs MyProfile
             #Set-AWSCredential -ProfileName MyProfile
             #Initialize-AWSDefaultConfiguration -ProfileName MyProfile -Region us-east-1
             #Aws configure --profile MyProfile
-            Initialize-AWSDefaultConfiguration -AccessKey $(access_key) -SecretKey $env:MY_SECRET
+            Initialize-AWSDefaultConfiguration -AccessKey $(access_key) -SecretKey $secret
 
             Write-Host "------- PS Version Information"
             Get-Host
