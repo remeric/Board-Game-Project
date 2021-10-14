@@ -120,7 +120,7 @@ stages:
 
             # Install-Package Microsoft.PowerShell.Commands.Utility
 
-            Get-Module
+            # Get-Module
 
             Write-Host "-------Installing AWS Tools Common module"
             Set-executionpolicy unrestricted
@@ -128,23 +128,19 @@ stages:
             Set-PSRepository PSGallery -InstallationPolicy Trusted
             install-module AWS.Tools.Common -SkipPublisherCheck
 
-            Write-Host "-------Check Installed Modules"
-            Get-InstalledModule
+            # Write-Host "-------Check Installed Modules"
+            # Get-InstalledModule
 
-            # $env:PSModulePath
-
-            # Write-Host: "------- Set AWS Credentials"
+            Write-Host "------- Set AWS Credentials"
             Set-AwsCredential -AccessKey $(access_key) -SecretKey $(secret_key)
 
-            # $env:PSModulePath
-
             # Write-Host "------- Show Environment Variables"
-            dir env:
+            # dir env:
 
             # Write-Host "------- Verify credentials file"
             # Dir $ENV:USERPROFILE\.aws\credentials
 
-            Write-Host "------- Version Information"
+            Write-Host "------- PS Version Information"
             Get-Host
 
             #Install AWS Tools
