@@ -1,13 +1,8 @@
             #set Parameters (must use script with params for secrets in AzureDevops, can't do inline)
-            param(
-            [Parameter(Mandatory=$True, Position=0, ValueFromPipeline=$false)]
-            [System.String]
-            $access_param,
+            param($accessparam,$secretparam)
 
-            [Parameter(Mandatory=$True, Position=1, ValueFromPipeline=$false)]
-            [System.String]
-            $secret_param
-            )
+            $accessparam
+            $secretparam
             
             #Set to powershell 7 (Azure Devops currently launches V5)
             if ($PSVersionTable.PSVersion -lt [Version]"7.0") {
@@ -35,7 +30,7 @@
             aws --version
 
             Write-Host "------- Set AWS Credentials"
-            Initialize-AWSDefaultConfiguration -AccessKey $access_param -SecretKey $secret_param
+            Initialize-AWSDefaultConfiguration -AccessKey $accessparam -SecretKey $secretparam
 
             # Query for name of cluster and service (assuming you left cluster and service names the same from the original terraform script)
             
