@@ -104,12 +104,6 @@ stages:
           targetType: 'inline'
           script: |
 
-            # Set AWS credentials
-            # SETX AWS_ACCESS_KEY_ID $(access_key)
-            # SETX AWS_SECRET_ACCESS_KEY $(secret_key)
-            # SETX AWS_DEFAULT_REGION us-east-1
-            #Set-AWSCredential -AccessKey $(access_key) -SecretKey $(secret_key) -StoreAs default
-
             #Set to powershell 7
             if ($PSVersionTable.PSVersion -lt [Version]"7.0") {
             Write-Host "Version: $($PSVersionTable.PSVersion)"
@@ -118,12 +112,9 @@ stages:
             exit
             }
 
-            # Write-Host "------- Show Environment Variables"
-            # dir env:
+            Write-Host "-------Install AWS Tools"
+            start-Process "msiexec.exe" -argumentlist "/i https://awscli.amazonaws.com/AWSCLIV2.msi /qn" -Wait
 
-            # Install-Package Microsoft.PowerShell.Commands.Utility
-
-            # Get-Module
 
             Write-Host "-------Installing AWS Tools Common module"
             Set-executionpolicy unrestricted
@@ -139,17 +130,11 @@ stages:
             Set-AWSCredential -ProfileName myCredentials
             Initialize-AWSDefaultConfiguration -ProfileName myCredentials -Region us-east-1
 
-            # Write-Host "------- Verify credentials file"
-            # Dir $ENV:USERPROFILE\.aws\credentials
-
             Write-Host "------- PS Version Information"
             Get-Host
 
             Write-Host "-------AWS Version Information"
             aws --version
-
-            # Write-Host "Check AWS credentials configuration"
-            # aws configure
 
             # Query for name of cluster and service (assuming you left cluster and service names the same from the terraform script)
             
