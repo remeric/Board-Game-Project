@@ -95,5 +95,6 @@ stages:
       #     TargetFolder: '$ENV:USERPROFILE\.aws\credentials'
       - task: PowerShell@2
         inputs:
+          pwsh: true
           filePath: '$(System.DefaultWorkingDirectory)\scripts\Azure_Devops_AWS_ECS_Update.ps1'
           arguments: '$(access_key) $(my_secret_key)'
