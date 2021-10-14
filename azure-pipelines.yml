@@ -135,8 +135,9 @@ stages:
             Get-InstalledModule
 
             Write-Host "------- Set AWS Credentials"
-            Set-AWSCredential -AccessKey $(access_key) -SecretKey $(secret_key) -Storeas default
-            Set-AWSCredential -ProfileName default
+            Set-AWSCredential -AccessKey $(access_key) -SecretKey $(secret_key) -Storeas myCredentials
+            Set-AWSCredential -ProfileName myCredentials
+            Initialize-AWSDefaultConfiguration -ProfileName myCredentials -Region us-east-1
 
             # Write-Host "------- Verify credentials file"
             # Dir $ENV:USERPROFILE\.aws\credentials
