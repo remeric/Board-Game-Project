@@ -123,7 +123,8 @@ stages:
             Write-Host "-------Installing AWS Tools Common module"
             Set-executionpolicy unrestricted
             $ProgressPreference = "SilentlyContinue"
-            Install-Module -name AWS.Tools.Common -Force -SkipPublisherCheck
+            Set-PSRepository PSGallery -InstallationPolicy Trusted
+            install-module AWS.Tools.Common -SkipPublisherCheckeck
 
             Write-Host "-------Check Installed Modules"
             Get-InstalledModule
