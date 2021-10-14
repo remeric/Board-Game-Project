@@ -12,6 +12,7 @@ variables:
   AWS_SECRET_ACCESS_KEY: $(client_secret)
   AWS_DEFAULT_REGION: 'us-east-1'
   MY_SECRET : $(secret_key)
+- group: my_secrets
 
 stages:
 # - stage: Build
@@ -143,7 +144,7 @@ stages:
             #Set-AWSCredential -ProfileName MyProfile
             #Initialize-AWSDefaultConfiguration -ProfileName MyProfile -Region us-east-1
             #Aws configure --profile MyProfile
-            Initialize-AWSDefaultConfiguration -AccessKey $(access_key) -SecretKey $(secret_key_2)
+            Initialize-AWSDefaultConfiguration -AccessKey $(access_key) -SecretKey $(my_secret_key)
 
             Write-Host "------- PS Version Information"
             Get-Host
