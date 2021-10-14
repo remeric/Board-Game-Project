@@ -118,6 +118,8 @@ stages:
             exit
             }
 
+            $env:PSModulePath
+
             Write-Host "-------Installing AWS Tools Common module"
             Set-executionpolicy unrestricted
             $ProgressPreference = "SilentlyContinue"
@@ -126,9 +128,12 @@ stages:
             Write-Host "-------Check Installed Modules"
             Get-InstalledModule
 
+            $env:PSModulePath
 
             Write-Host: "------- Set AWS Credentials"
             Set-AwsCredential -AccessKey $(access_key) -SecretKey $(secret_key)
+
+            $env:PSModulePath
 
             Write-Host "------- Show Environment Variables"
             dir env:
