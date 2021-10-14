@@ -100,91 +100,95 @@ stages:
       #     SourceFolder: '$(Agent.TempDirectory)'
       #     Contents: 'default-ec2.pem'
       #     TargetFolder: '$ENV:USERPROFILE\.aws\credentials'
+      # - task: PowerShell@2
+      #   env:
+      #     MY_SECRET: $(secret_key)
+      #   inputs:
+      #     targetType: 'inline'
+      #     script: |
+
+      #       #Set to powershell 7
+      #       if ($PSVersionTable.PSVersion -lt [Version]"7.0") {
+      #       Write-Host "Version: $($PSVersionTable.PSVersion)"
+      #       Write-Host "Re-launching as pwsh"
+      #       pwsh -File $MyInvocation.MyCommand.Definition
+      #       exit
+      #       }
+
+      #       #Write-Host "-------Install AWS Tools"
+      #       #start-Process "msiexec.exe" -argumentlist "/i https://awscli.amazonaws.com/AWSCLIV2.msi /qn" -Wait
+
+
+      #       Write-Host "-------Installing AWS Tools Common module"
+      #       Set-executionpolicy unrestricted
+      #       $ProgressPreference = "SilentlyContinue"
+      #       Set-PSRepository PSGallery -InstallationPolicy Trusted
+      #       install-module AWS.Tools.Common -SkipPublisherCheck
+
+      #       Write-Host "-------Check Installed Modules"
+      #       Get-InstalledModule
+
+      #       #$secret = ConvertTo-SecureString "${env:MY_SECRET}" -AsPlainText -Force
+      #       $secret = $env:MY_SECRET
+
+      #       # Write-Host "secret"
+      #       # $secret
+      #       # Write-Host "(secret_key)"
+      #       # $(secret_key)
+      #       # Write-Host "env:MY_SECRET"
+      #       # $env:MY_SECRET
+
+      #       Write-Host "------- Set AWS Credentials"
+      #       #Set-AWSCredential -AccessKey $(access_key) -SecretKey $(secret_key) -StoreAs MyProfile
+      #       #Set-AWSCredential -ProfileName MyProfile
+      #       #Initialize-AWSDefaultConfiguration -ProfileName MyProfile -Region us-east-1
+      #       #Aws configure --profile MyProfile
+      #       Initialize-AWSDefaultConfiguration -AccessKey $(access_key) -SecretKey $(my_secret_key)
+
+      #       Write-Host "------- PS Version Information"
+      #       Get-Host
+
+      #       Write-Host "-------AWS Version Information"
+      #       aws --version
+
+      #       # Query for name of cluster and service (assuming you left cluster and service names the same from the terraform script)
+            
+      #       Write-Host "------- Getting Cluster"
+      #       $clusterlist = aws ecs list-clusters --query 'clusterArns' --region us-east-1
+      #       $clusters = $clusterlist | ConvertFrom-Json
+
+      #       Write-Host "Cluster list variable $clusterlist"
+      #       Write-Host "Clusters variable $clusters"
+      #       Write-Host "PS Version"
+      #       Get-Host
+            
+      #       foreach ($cluster in $clusters) {
+      #           If ($cluster -like "*BGapp_ECS_cluster*") {
+      #               $clusterarn = $cluster
+      #               echo $clusterarn
+      #           }
+      #       }
+      #       Write-Host "-------Cluster ARN $clusterarn"
+
+
+      #       Write-Host "-------Getting Service ARN"
+      #       $servicelist = aws ecs list-services --cluster $clusterarn --query 'serviceArns'  --region us-east-1
+      #       $services = $servicelist | ConvertFrom-Json
+            
+      #       foreach ($service in $services) {
+      #           If ($service -like "*BGapp_ECS_service*") {
+      #               $servicearn = $service
+      #               echo $servicearn
+      #           }
+      #       }
+      #       Write-Host "-------Service ARN $servicearn"
+            
+      #       #update service that is running task
+      #       #aws ecs update-service --cluster $clusterarn --service $servicearn --region us-east-1 --force-new-deployment
       - task: PowerShell@2
-        env:
-          MY_SECRET: $(secret_key)
         inputs:
-          targetType: 'inline'
-          script: |
-
-            #Set to powershell 7
-            if ($PSVersionTable.PSVersion -lt [Version]"7.0") {
-            Write-Host "Version: $($PSVersionTable.PSVersion)"
-            Write-Host "Re-launching as pwsh"
-            pwsh -File $MyInvocation.MyCommand.Definition
-            exit
-            }
-
-            #Write-Host "-------Install AWS Tools"
-            #start-Process "msiexec.exe" -argumentlist "/i https://awscli.amazonaws.com/AWSCLIV2.msi /qn" -Wait
-
-
-            Write-Host "-------Installing AWS Tools Common module"
-            Set-executionpolicy unrestricted
-            $ProgressPreference = "SilentlyContinue"
-            Set-PSRepository PSGallery -InstallationPolicy Trusted
-            install-module AWS.Tools.Common -SkipPublisherCheck
-
-            Write-Host "-------Check Installed Modules"
-            Get-InstalledModule
-
-            #$secret = ConvertTo-SecureString "${env:MY_SECRET}" -AsPlainText -Force
-            $secret = $env:MY_SECRET
-
-            # Write-Host "secret"
-            # $secret
-            # Write-Host "(secret_key)"
-            # $(secret_key)
-            # Write-Host "env:MY_SECRET"
-            # $env:MY_SECRET
-
-            Write-Host "------- Set AWS Credentials"
-            #Set-AWSCredential -AccessKey $(access_key) -SecretKey $(secret_key) -StoreAs MyProfile
-            #Set-AWSCredential -ProfileName MyProfile
-            #Initialize-AWSDefaultConfiguration -ProfileName MyProfile -Region us-east-1
-            #Aws configure --profile MyProfile
-            Initialize-AWSDefaultConfiguration -AccessKey $(access_key) -SecretKey $(my_secret_key)
-
-            Write-Host "------- PS Version Information"
-            Get-Host
-
-            Write-Host "-------AWS Version Information"
-            aws --version
-
-            # Query for name of cluster and service (assuming you left cluster and service names the same from the terraform script)
-            
-            Write-Host "------- Getting Cluster"
-            $clusterlist = aws ecs list-clusters --query 'clusterArns' --region us-east-1
-            $clusters = $clusterlist | ConvertFrom-Json
-
-            Write-Host "Cluster list variable $clusterlist"
-            Write-Host "Clusters variable $clusters"
-            Write-Host "PS Version"
-            Get-Host
-            
-            foreach ($cluster in $clusters) {
-                If ($cluster -like "*BGapp_ECS_cluster*") {
-                    $clusterarn = $cluster
-                    echo $clusterarn
-                }
-            }
-            Write-Host "-------Cluster ARN $clusterarn"
-
-
-            Write-Host "-------Getting Service ARN"
-            $servicelist = aws ecs list-services --cluster $clusterarn --query 'serviceArns'  --region us-east-1
-            $services = $servicelist | ConvertFrom-Json
-            
-            foreach ($service in $services) {
-                If ($service -like "*BGapp_ECS_service*") {
-                    $servicearn = $service
-                    echo $servicearn
-                }
-            }
-            Write-Host "-------Service ARN $servicearn"
-            
-            #update service that is running task
-            #aws ecs update-service --cluster $clusterarn --service $servicearn --region us-east-1 --force-new-deployment
+          filePath: '$(System.DefaultWorkingDirectory)/scripts'
+          arguments: '$(access_key) $(my_secret_key)'
 
 
 
