@@ -93,6 +93,11 @@ stages:
       #     SourceFolder: '$(Agent.TempDirectory)'
       #     Contents: 'default-ec2.pem'
       #     TargetFolder: '$ENV:USERPROFILE\.aws\credentials'
+      - task: PowerShell@2
+        inputs:
+          targetType: 'inline'
+          script: |
+            $(System.DefaultWorkingDirectory)\scripts\Azure_Devops_AWS_ECS_Update.ps1
 
       - task: PowerShell@2
         inputs:
