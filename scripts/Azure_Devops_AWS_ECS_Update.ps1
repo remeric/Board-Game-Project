@@ -30,7 +30,7 @@
             aws --version
 
             Write-Host "------- Set AWS Credentials"
-            Initialize-AWSDefaultConfiguration -AccessKey $accessparam -SecretKey $secretparam
+            Initialize-AWSDefaultConfiguration -AccessKey '$accessparam' -SecretKey '$secretparam'
 
             # Query for name of cluster and service (assuming you left cluster and service names the same from the original terraform script)
             
