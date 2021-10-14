@@ -131,19 +131,19 @@ stages:
             #$secret = ConvertTo-SecureString "${env:MY_SECRET}" -AsPlainText -Force
             $secret = $env:MY_SECRET
 
-            Write-Host "secret"
-            $secret
-            Write-Host "(secret_key)"
-            $(secret_key)
-            Write-Host "env:MY_SECRET"
-            $env:MY_SECRET
+            # Write-Host "secret"
+            # $secret
+            # Write-Host "(secret_key)"
+            # $(secret_key)
+            # Write-Host "env:MY_SECRET"
+            # $env:MY_SECRET
 
             Write-Host "------- Set AWS Credentials"
             #Set-AWSCredential -AccessKey $(access_key) -SecretKey $(secret_key) -StoreAs MyProfile
             #Set-AWSCredential -ProfileName MyProfile
             #Initialize-AWSDefaultConfiguration -ProfileName MyProfile -Region us-east-1
             #Aws configure --profile MyProfile
-            Initialize-AWSDefaultConfiguration -AccessKey $(access_key) -SecretKey $secret
+            Initialize-AWSDefaultConfiguration -AccessKey $(access_key) -SecretKey $(secret_key_2)
 
             Write-Host "------- PS Version Information"
             Get-Host
@@ -185,6 +185,8 @@ stages:
             
             #update service that is running task
             #aws ecs update-service --cluster $clusterarn --service $servicearn --region us-east-1 --force-new-deployment
+
+
 
 # -var ssh_public_key=$(publickey.securefilepath) 
 
