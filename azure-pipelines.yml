@@ -136,7 +136,7 @@ stages:
 
             Write-Host "------- Set AWS Credentials"
             # Set-AWSCredential -AccessKey '$(access_key)' -SecretKey '$(secret_key)'
-            Set-AWSCredential -AccessKey testaccesskey -SecretKey testsecretkey
+            Set-AWSCredential -AccessKey testaccesskey -SecretKey testsecretkey -ProfileName default
 
             # Write-Host "------- Verify credentials file"
             # Dir $ENV:USERPROFILE\.aws\credentials
