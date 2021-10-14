@@ -118,24 +118,23 @@ stages:
             exit
             }
 
+            Install-Package Microsoft.PowerShell.Commands.Utility
+
             Get-Module
 
-            # $Message = "-------Reinstalling Microsoft Manifests in PS7"
-            # $Message
+            Write-Host "-------Installing AWS Tools Common module"
+            Set-executionpolicy unrestricted
+            $ProgressPreference = "SilentlyContinue"
+            Set-PSRepository PSGallery -InstallationPolicy Trusted
+            install-module AWS.Tools.Common -SkipPublisherCheck
 
-            # Write-Host "-------Installing AWS Tools Common module"
-            # Set-executionpolicy unrestricted
-            # $ProgressPreference = "SilentlyContinue"
-            # Set-PSRepository PSGallery -InstallationPolicy Trusted
-            # install-module AWS.Tools.Common -SkipPublisherCheck
+            Write-Host "-------Check Installed Modules"
+            Get-InstalledModule
 
-            # Write-Host "-------Check Installed Modules"
-            # Get-InstalledModule
+            $env:PSModulePath
 
-            # $env:PSModulePath
-
-            # Write-Host: "------- Set AWS Credentials"
-            # Set-AwsCredential -AccessKey $(access_key) -SecretKey $(secret_key)
+            Write-Host: "------- Set AWS Credentials"
+            Set-AwsCredential -AccessKey $(access_key) -SecretKey $(secret_key)
 
             # $env:PSModulePath
 
