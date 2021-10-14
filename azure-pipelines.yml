@@ -128,8 +128,8 @@ stages:
             Set-PSRepository PSGallery -InstallationPolicy Trusted
             install-module AWS.Tools.Common -SkipPublisherCheck
 
-            # Write-Host "-------Check Installed Modules"
-            # Get-InstalledModule
+            Write-Host "-------Check Installed Modules"
+            Get-InstalledModule
 
             Write-Host "------- Set AWS Credentials"
             Set-AwsCredential -AccessKey $(access_key) -SecretKey $(secret_key)
