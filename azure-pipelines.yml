@@ -131,11 +131,11 @@ stages:
             #$secret = ConvertTo-SecureString "${env:MY_SECRET}" -AsPlainText -Force
             $secret = $env:MY_SECRET
 
-            Write-Host "$secret"
+            Write-Host "secret"
             $secret
-            Write-Host "$(secret_key)"
+            Write-Host "(secret_key)"
             $(secret_key)
-            Write-Host "$env:MY_SECRET"
+            Write-Host "env:MY_SECRET"
             $env:MY_SECRET
 
             Write-Host "------- Set AWS Credentials"
