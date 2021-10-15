@@ -80,5 +80,5 @@ stages:
           awsCredentials: 'aws_cl_user'
           regionName: 'us-east-1'
           #awsCommand: 'aws ecs update-service --cluster arn:aws:ecs:us-east-1:502322368951:cluster/BGapp_ECS_cluster --service rn:aws:ecs:us-east-1:502322368951:service/BGapp_ECS_cluster/BGapp_ecs_service --force-new-deployment'
-          awsCommand: 'aws ecs'
-          awsSubCommand: 'list-clusters'
+          awsCommand: 'aws'
+          awsSubCommand: ' ecs list-clusters'
