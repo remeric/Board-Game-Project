@@ -1,5 +1,5 @@
 trigger:
-- main
+- main/app
 
 resources:
 - repo: self
