@@ -1,15 +1,6 @@
-            #set Parameters (must use script with params for secrets in AzureDevops, can't do inline)
+            #set Parameters
             $accessparam = $args[0]
-            $secretparam = $args[1]
-            
-
-            # #Set to powershell 7 (Azure Devops currently launches V5)
-            # if ($PSVersionTable.PSVersion -lt [Version]"7.0") {
-            #     Write-Host "Version: $($PSVersionTable.PSVersion)"
-            #     Write-Host "Re-launching as pwsh"
-            #     pwsh -File $MyInvocation.MyCommand.Definition
-            #     exit
-            # }   
+            $secretparam = $args[1] 
 
             #Install AWS Tools module for Set-AWSCredentials command
             Write-Host "-------Installing AWS Tools Common module"
@@ -29,7 +20,7 @@
             aws --version
 
             Write-Host "------- Set AWS Credentials"
-            #Set-AWSCredential -AccessKey $accessparam -SecretKey $secretparam -StoreAs myprofile -Scope Global
+            Set-AWSCredential -AccessKey $accessparam -SecretKey $secretparam -StoreAs myprofile -Scope Global
             Initialize-AWSDefaultConfiguration -AccessKey $accessparam -SecretKey $secretparam -Region us-east-1 -Scope Global
 
             # Query for name of cluster and service (assuming you left cluster and service names the same from the original terraform script)
@@ -40,8 +31,6 @@
 
             Write-Host "Cluster list variable $clusterlist"
             Write-Host "Clusters variable $clusters"
-            Write-Host "PS Version"
-            Get-Host
             
             foreach ($cluster in $clusters) {
                 If ($cluster -like "*BGapp_ECS_cluster*") {
