@@ -12,7 +12,7 @@ variables:
   # AWS_DEFAULT_REGION: 'us-east-1'
   # MY_SECRET : $(secret_key)
 
-# stages:
+stages:
 # - stage: Build
 #   displayName: Build image
 #   jobs:
