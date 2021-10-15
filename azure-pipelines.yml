@@ -49,6 +49,7 @@ stages:
             #!/bin/bash
             #Verifying global environmental variables are still here
             echo print environment variables
+            printenv
       - task:  TerraformCLI@0  
         inputs:
           command: 'init'
