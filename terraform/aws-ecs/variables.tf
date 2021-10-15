@@ -1,5 +1,5 @@
-#variable "access_key" {}
-#variable "secret_key" {}
+variable "access_key" {}
+variable "secret_key" {}
 variable "ssh_public_key" {
   default = "C:/Terraform/aws/aws_keys/default-ec2.pem"
 }
