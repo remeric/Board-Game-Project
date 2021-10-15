@@ -30,32 +30,32 @@ stages:
 #         Dockerfile: '**/app/Dockerfile'
 #         tags: '$(tag)'
 
-# - stage: Update
-#   displayName: Update
-#   jobs:
-#   - job: Update
-#     displayName: Update Terraform Task
-#     pool:
-#       vmImage: 'Ubuntu-latest'
-#     steps: 
-#       - task: DownloadSecureFile@1
-#         name: publickey
-#         inputs:
-#           secureFile: 'default-ec2.pem'
+- stage: Update
+  displayName: Update
+  jobs:
+  - job: Update
+    displayName: Update Terraform Task
+    pool:
+      vmImage: 'Ubuntu-latest'
+    steps: 
+      - task: DownloadSecureFile@1
+        name: publickey
+        inputs:
+          secureFile: 'default-ec2.pem'
 
-#       - task: TerraformCLI@0  
-#         inputs:
-#           command: 'init'
-#           workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/aws-ecs'
-#           commandOptions: '-backend-config="access_key=$(access_key)" -backend-config="secret_key=$(secret_key)" '
-#           backendType: 'selfConfigured'
-#           allowTelemetryCollection: true
-#       - task: TerraformCLI@0
-#         inputs:
-#           command: 'apply'
-#           workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/aws-ecs'
-#           commandOptions: '-var access_key=$(access_key) -var secret_key=$(secret_key) -var application_version=92'
-#           allowTelemetryCollection: true
+      - task: TerraformCLI@0  
+        inputs:
+          command: 'init'
+          workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/aws-ecs'
+          commandOptions: '-backend-config="access_key=$(access_key)" -backend-config="secret_key=$(secret_key)" '
+          backendType: 'selfConfigured'
+          allowTelemetryCollection: true
+      - task: TerraformCLI@0
+        inputs:
+          command: 'apply'
+          workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/aws-ecs'
+          commandOptions: '-var access_key=$(access_key) -var secret_key=$(secret_key) -var application_version=92'
+          allowTelemetryCollection: true
         
 - stage: Deploy
   displayName: Deploy Container in ECS
