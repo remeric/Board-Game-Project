@@ -7,10 +7,10 @@ resources:
 
 variables:
   tag: '$(Build.BuildId)'
-  AWS_ACCESS_KEY_ID: $(client_id)
-  AWS_SECRET_ACCESS_KEY: $(client_secret)
-  AWS_DEFAULT_REGION: 'us-east-1'
-  MY_SECRET : $(secret_key)
+  # AWS_ACCESS_KEY_ID: $(client_id)
+  # AWS_SECRET_ACCESS_KEY: $(client_secret)
+  # AWS_DEFAULT_REGION: 'us-east-1'
+  # MY_SECRET : $(secret_key)
 
 stages:
 # - stage: Build
@@ -47,14 +47,14 @@ stages:
         inputs:
           command: 'init'
           workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/aws-ecs'
-          commandOptions: '-backend-config="access_key=$(access_key)" -backend-config="secret_key=$(secret_key)" '
+          commandOptions: '-backend-config="access_key=$(access_key)" -backend-config="$(my_secret_key)" '
           backendType: 'selfConfigured'
           allowTelemetryCollection: true
       - task: TerraformCLI@0
         inputs:
           command: 'apply'
           workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/aws-ecs'
-          commandOptions: '-var access_key=$(access_key) -var secret_key=$(secret_key) -var application_version=92'
+          commandOptions: '-var access_key=$(access_key) -var secret_key=$(my_secret_key) -var application_version=92'
           allowTelemetryCollection: true
         
 - stage: Deploy
