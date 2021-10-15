@@ -66,9 +66,9 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'
     steps:
-      - task: DownloadSecureFile@1
-        inputs:
-          secureFile: 'default-ec2.pem'
+      # - task: DownloadSecureFile@1
+      #   inputs:
+      #     secureFile: 'default-ec2.pem'
       # - task: PowerShell@2
       #   inputs:
       #     targetType: 'inline'
@@ -98,6 +98,16 @@ stages:
       #     pwsh: true
       #     filePath: '$(System.DefaultWorkingDirectory)\scripts\Azure_Devops_AWS_ECS_Update.ps1'
       #     arguments: '$(access_key) $(my_secret_key)'
+      - task: Bash@3
+        inputs:
+          targetType: 'inline'
+          script: |
+            apt update
+            apt install curl
+            apt install unzip
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            ./aws/install
       - task: AWSCLI@1
         inputs:
           awsCredentials: 'aws_cl_user'
