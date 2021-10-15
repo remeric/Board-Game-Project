@@ -42,7 +42,13 @@ stages:
         name: publickey
         inputs:
           secureFile: 'default-ec2.pem'
-
+      - task: Bash@3
+        inputs:
+          targetType: 'inline'
+          script: |
+            #!/bin/bash
+            #Verifying global environmental variables are still here
+            echo print environment variables
       - task:  TerraformCLI@0  
         inputs:
           command: 'init'
