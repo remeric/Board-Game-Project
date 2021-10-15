@@ -13,58 +13,58 @@ variables:
   # MY_SECRET : $(secret_key)
 
 stages:
-# - stage: Build
-#   displayName: Build image
-#   jobs:
-#   - job: Build
-#     displayName: Build
-#     pool:
-#       vmImage: ubuntu-latest
-#     steps:
-#     - task: Docker@2
-#       displayName: Build an image
-#       inputs:
-#         containerRegistry: 'DockerHubRemeric'
-#         repository: 'remeric/board-game-selector'
-#         command: 'buildAndPush'
-#         Dockerfile: '**/app/Dockerfile'
-#         tags: '$(tag)'
+- stage: Build
+  displayName: Build image
+  jobs:
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: Docker@2
+      displayName: Build an image
+      inputs:
+        containerRegistry: 'DockerHubRemeric'
+        repository: 'remeric/board-game-selector'
+        command: 'buildAndPush'
+        Dockerfile: '**/app/Dockerfile'
+        tags: '$(tag)'
 
-# - stage: Update
-#   displayName: Update
-#   jobs:
-#   - job: Update
-#     displayName: Update Terraform Task
-#     pool:
-#       vmImage: 'Ubuntu-latest'
-#     steps: 
-#       # - task: DownloadSecureFile@1
-#       #   name: publickey
-#       #   inputs:
-#       #     secureFile: 'default-ec2.pem'
-#       # - task: Bash@3
-#       #   inputs:
-#       #     targetType: 'inline'
-#       #     script: |
-#       #       #!/bin/bash
-#       #       #Verifying global environmental variables are still here
-#       #       echo print environment variables
-#       #       printenv
-#       - task:  TerraformCLI@0  
-#         inputs:
-#           command: 'init'
-#           workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/aws-ecs'
-#           #commandOptions: '-backend-config="access_key=$AWS_ACCESS_KEY_ID -backend-config=$AWS_SECRET_ACCESS_KEY -var ssh_public_key=$(publickey.securefilepath) '
-#           #commandOptions: '-backend-config="access_key=$(access_key)" -backend-config="$(my_secret_key)" -var ssh_public_key=$(publickey.securefilepath) '
-#           backendType: 'selfConfigured'
-#           allowTelemetryCollection: true
-#       - task: TerraformCLI@0
-#         inputs:
-#           command: 'apply'
-#           workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/aws-ecs'
-#           #commandOptions: '-var access_key=$(access_key) -var secret_key=$(my_secret_key) -var application_version=92'
-#           commandOptions: '-var application_version=$(tag)'
-#           allowTelemetryCollection: true
+- stage: Update
+  displayName: Update
+  jobs:
+  - job: Update
+    displayName: Update Terraform Task
+    pool:
+      vmImage: 'Ubuntu-latest'
+    steps: 
+      # - task: DownloadSecureFile@1
+      #   name: publickey
+      #   inputs:
+      #     secureFile: 'default-ec2.pem'
+      # - task: Bash@3
+      #   inputs:
+      #     targetType: 'inline'
+      #     script: |
+      #       #!/bin/bash
+      #       #Verifying global environmental variables are still here
+      #       echo print environment variables
+      #       printenv
+      - task:  TerraformCLI@0  
+        inputs:
+          command: 'init'
+          workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/aws-ecs'
+          #commandOptions: '-backend-config="access_key=$AWS_ACCESS_KEY_ID -backend-config=$AWS_SECRET_ACCESS_KEY -var ssh_public_key=$(publickey.securefilepath) '
+          #commandOptions: '-backend-config="access_key=$(access_key)" -backend-config="$(my_secret_key)" -var ssh_public_key=$(publickey.securefilepath) '
+          backendType: 'selfConfigured'
+          allowTelemetryCollection: true
+      - task: TerraformCLI@0
+        inputs:
+          command: 'apply'
+          workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/aws-ecs'
+          #commandOptions: '-var access_key=$(access_key) -var secret_key=$(my_secret_key) -var application_version=92'
+          commandOptions: '-var application_version=$(tag)'
+          allowTelemetryCollection: true
         
 - stage: Deploy
   displayName: Deploy Container in ECS
