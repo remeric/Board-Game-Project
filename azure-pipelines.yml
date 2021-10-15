@@ -58,12 +58,12 @@ stages:
           #commandOptions: '-backend-config="access_key=$(access_key)" -backend-config="$(my_secret_key)" -var ssh_public_key=$(publickey.securefilepath) '
           backendType: 'selfConfigured'
           allowTelemetryCollection: true
-#       - task: TerraformCLI@0
-#         inputs:
-#           command: 'apply'
-#           workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/aws-ecs'
-#           commandOptions: '-var access_key=$(access_key) -var secret_key=$(my_secret_key) -var application_version=92'
-#           allowTelemetryCollection: true
+      - task: TerraformCLI@0
+        inputs:
+          command: 'apply'
+          workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/aws-ecs'
+          #commandOptions: '-var access_key=$(access_key) -var secret_key=$(my_secret_key) -var application_version=92'
+          allowTelemetryCollection: true
         
 # - stage: Deploy
 #   displayName: Deploy Container in ECS
