@@ -63,7 +63,7 @@ stages:
           command: 'apply'
           workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/aws-ecs'
           #commandOptions: '-var access_key=$(access_key) -var secret_key=$(my_secret_key) -var application_version=92'
-          commandOptions: '-var access_key=$(access_key) -var secret_key=$(my_secret_key) -var application_version=92'
+          commandOptions: '-var application_version=92'
           allowTelemetryCollection: true
         
 # - stage: Deploy
