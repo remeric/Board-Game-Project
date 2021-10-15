@@ -43,7 +43,7 @@ stages:
         inputs:
           secureFile: 'default-ec2.pem'
 
-      - task:  charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.terraform cli@0  
+      - task:  TerraformCLI@0  
         inputs:
           command: 'init'
           workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/aws-ecs'
