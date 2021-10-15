@@ -13,22 +13,22 @@ variables:
   # MY_SECRET : $(secret_key)
 
 stages:
-# - stage: Build
-#   displayName: Build image
-#   jobs:
-#   - job: Build
-#     displayName: Build
-#     pool:
-#       vmImage: ubuntu-latest
-#     steps:
-#     - task: Docker@2
-#       displayName: Build an image
-#       inputs:
-#         containerRegistry: 'DockerHubRemeric'
-#         repository: 'remeric/board-game-selector'
-#         command: 'buildAndPush'
-#         Dockerfile: '**/app/Dockerfile'
-#         tags: '$(tag)'
+- stage: Build
+  displayName: Build image
+  jobs:
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: Docker@2
+      displayName: Build an image
+      inputs:
+        containerRegistry: 'DockerHubRemeric'
+        repository: 'remeric/board-game-selector'
+        command: 'buildAndPush'
+        Dockerfile: '**/app/Dockerfile'
+        tags: '$(tag)'
 
 - stage: Update
   displayName: Update
@@ -66,28 +66,28 @@ stages:
           commandOptions: '-var application_version=$(tag)'
           allowTelemetryCollection: true
         
-# - stage: Deploy
-#   displayName: Deploy Container in ECS
-#   jobs:
-#   - job: Deploy
-#     displayName: Deploy
-#     pool:
-#       vmImage: 'ubuntu-latest'
-#     steps:
-#       # - task: Bash@3
-#       #   inputs:
-#       #     targetType: 'inline'
-#       #     script: |
-#       #       apt update
-#       #       apt install curl
-#       #       apt install unzip
-#       #       curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-#       #       unzip awscliv2.zip
-#       #       sudo ./aws/install --update
-#       - task: AWSCLI@1
-#         inputs:
-#           awsCredentials: 'aws_cl_user'
-#           regionName: 'us-east-1'
-#           #awsCommand: 'aws ecs update-service --cluster arn:aws:ecs:us-east-1:502322368951:cluster/BGapp_ECS_cluster --service rn:aws:ecs:us-east-1:502322368951:service/BGapp_ECS_cluster/BGapp_ecs_service --force-new-deployment'
-#           awsCommand: 'ecs'
-#           awsSubCommand: 'update-service --cluster arn:aws:ecs:us-east-1:502322368951:cluster/BGapp_ECS_cluster --service rn:aws:ecs:us-east-1:502322368951:service/BGapp_ECS_cluster/BGapp_ecs_service --force-new-deployment'
+- stage: Deploy
+  displayName: Deploy Container in ECS
+  jobs:
+  - job: Deploy
+    displayName: Deploy
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+      # - task: Bash@3
+      #   inputs:
+      #     targetType: 'inline'
+      #     script: |
+      #       apt update
+      #       apt install curl
+      #       apt install unzip
+      #       curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+      #       unzip awscliv2.zip
+      #       sudo ./aws/install --update
+      - task: AWSCLI@1
+        inputs:
+          awsCredentials: 'aws_cl_user'
+          regionName: 'us-east-1'
+          #awsCommand: 'aws ecs update-service --cluster arn:aws:ecs:us-east-1:502322368951:cluster/BGapp_ECS_cluster --service rn:aws:ecs:us-east-1:502322368951:service/BGapp_ECS_cluster/BGapp_ecs_service --force-new-deployment'
+          awsCommand: 'ecs'
+          awsSubCommand: 'update-service --cluster arn:aws:ecs:us-east-1:502322368951:cluster/BGapp_ECS_cluster --service rn:aws:ecs:us-east-1:502322368951:service/BGapp_ECS_cluster/BGapp_ecs_service --force-new-deployment'
