@@ -38,18 +38,18 @@ stages:
     pool:
       vmImage: 'Ubuntu-latest'
     steps: 
-      - task: DownloadSecureFile@1
-        name: publickey
-        inputs:
-          secureFile: 'default-ec2.pem'
-      - task: Bash@3
-        inputs:
-          targetType: 'inline'
-          script: |
-            #!/bin/bash
-            #Verifying global environmental variables are still here
-            echo print environment variables
-            printenv
+      # - task: DownloadSecureFile@1
+      #   name: publickey
+      #   inputs:
+      #     secureFile: 'default-ec2.pem'
+      # - task: Bash@3
+      #   inputs:
+      #     targetType: 'inline'
+      #     script: |
+      #       #!/bin/bash
+      #       #Verifying global environmental variables are still here
+      #       echo print environment variables
+      #       printenv
       - task:  TerraformCLI@0  
         inputs:
           command: 'init'
@@ -63,6 +63,7 @@ stages:
           command: 'apply'
           workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/aws-ecs'
           #commandOptions: '-var access_key=$(access_key) -var secret_key=$(my_secret_key) -var application_version=92'
+          commandOptions: '-var access_key=$(access_key) -var secret_key=$(my_secret_key) -var application_version=92'
           allowTelemetryCollection: true
         
 # - stage: Deploy
