@@ -38,7 +38,7 @@ Notice:  These instructions are for those with some basic DevOps knowledge - if 
 - Terraform
 - Azure Devops
 
-## Tools/languages I have started practicing with/learning to date (as of 9/8/2021 - 9/28/2021)
+## Tools/languages I have started practicing with/learning to date (as of 9/8/2021 - 10/18/2021)
 
 - AWS
 - Python
@@ -50,3 +50,4 @@ Notice:  These instructions are for those with some basic DevOps knowledge - if 
 - Azure
 - Jenkins
 - Azure DevOps
+- Ansible (starting week of 10/18)
