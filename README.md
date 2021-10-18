@@ -11,6 +11,7 @@ To build an application using modern DevOps tools that will eventually implement
 Please see my various branches to check out other implementations of the application, such as the EKS_Build branch that utilizes Kubernetes on Amazon EKS behind a load balancer.  The branches are to show my experience but the main applicaiton I plan to run in free tier services to save on personal cost.
 
 ## Implementation
+NOTICE!  these instructions may not always be 100% up to date as I am constantly working on my skills and updating things, this is more to work as a guide is someone else would also like to play around with the app on their own.
 - Update ./app/games.xlsx with your own list of games
 - Build your docker image and push to your docker hub
 - In terraform/backend-state:
@@ -35,6 +36,7 @@ Notice:  These instructions are for those with some basic DevOps knowledge - if 
 - Docker
 - Kubernetes
 - Terraform
+- Azure Devops
 
 ## Tools/languages I have started practicing with/learning to date (as of 9/8/2021 - 9/28/2021)
 
@@ -47,4 +49,4 @@ Notice:  These instructions are for those with some basic DevOps knowledge - if 
 - GCP
 - Azure
 - Jenkins
-- Azure DevOps (started)
+- Azure DevOps
