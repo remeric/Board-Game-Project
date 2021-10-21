@@ -1,5 +1,5 @@
-resource "aws_security_group" "BGapp_lb_sg" {
-  name   = "BGapp_lb_sg"
+resource "aws_security_group" "lb_sg" {
+  name   = "${var.app_name}_${var.environment}_lb_sg"
   vpc_id = aws_default_vpc.default.id
 
   ingress {
@@ -17,19 +17,20 @@ resource "aws_security_group" "BGapp_lb_sg" {
   }
 
   tags = {
-    name = "BGapp_sg"
+    Environment = "${var.environment}"
+    App_Name    = "${var.app_name}"
   }
 }
 
-resource "aws_security_group" "BGapp_ecs_sg" {
-  name   = "BGapp_ecs_sg"
+resource "aws_security_group" "ecs_sg" {
+  name   = "${var.app_name}_${var.environment}_ecs_sg"
   vpc_id = aws_default_vpc.default.id
 
   ingress {
     from_port       = 32768
     to_port         = 65535
     protocol        = "tcp"
-    security_groups = ["${aws_security_group.BGapp_lb_sg.id}"]
+    security_groups = ["${aws_security_group.lb_sg.id}"]
   }
 
   ingress {
@@ -48,6 +49,7 @@ resource "aws_security_group" "BGapp_ecs_sg" {
   }
 
   tags = {
-    name = "BGapp_sg"
+    Environment = "${var.environment}"
+    App_Name    = "${var.app_name}"
   }
 }

@@ -26,17 +26,17 @@ provider "aws" {
 resource "aws_default_vpc" "default" {
 }
 
-resource "aws_ecs_cluster" "BGapp_ECS_cluster" {
-  name = "BGapp_ECS_cluster"
+resource "aws_ecs_cluster" "ECS_cluster" {
+  name = "${var.app_name}-${var.environment}_ECS_cluster"
 }
 
-resource "aws_ecs_task_definition" "BGapp_Container_Task_Def" {
+resource "aws_ecs_task_definition" "Container_Task_Def" {
   family                   = "BGapp"
   container_definitions    = <<DEFINITION
   [
     {
       "name": "BGapp",
-      "image": "remeric/board-game-selector:${var.application_version}",
+      "image": "${var.docker_image}:${var.application_version}",
       "essential": true,
       "portMappings": [
         {
@@ -55,18 +55,23 @@ resource "aws_ecs_task_definition" "BGapp_Container_Task_Def" {
   cpu                      = 512
   execution_role_arn       = aws_iam_role.ecsTaskExecutionRole.arn
 
+  tags = {
+    Environment = "${var.environment}"
+    App_Name    = "${var.app_name}"
+  }
+
 }
 
-resource "aws_ecs_service" "BGapp_ecs_service" {
-  name            = "BGapp_ecs_service"
-  cluster         = aws_ecs_cluster.BGapp_ECS_cluster.id
+resource "aws_ecs_service" "ecs_service" {
+  name            = "${var.app_name}_${var.environment}_ecs_service"
+  cluster         = aws_ecs_cluster.ECS_cluster.id
   desired_count   = 1
-  task_definition = aws_ecs_task_definition.BGapp_Container_Task_Def.arn
+  task_definition = aws_ecs_task_definition.Container_Task_Def.arn
   launch_type     = "EC2"
 
   load_balancer {
-    target_group_arn = aws_lb_target_group.BGapp_target_group.arn
-    container_name   = aws_ecs_task_definition.BGapp_Container_Task_Def.family
+    target_group_arn = aws_lb_target_group.target_group.arn
+    container_name   = aws_ecs_task_definition.Container_Task_Def.family
     container_port   = 80
   }
 
